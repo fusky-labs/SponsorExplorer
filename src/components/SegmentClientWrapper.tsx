@@ -1,12 +1,16 @@
 "use client"
 
-import { LockedSegmentsNotice, SegmentTable } from "@/components"
-import { VideoSegments } from "@/types"
+import { useState, useEffect } from "react"
 import { LuFilter, LuHelpCircle, LuMoreVertical } from "react-icons/lu"
+import { VideoSegments } from "@/types"
+import { LockedSegmentsNotice } from "./LockedSegmentsNotice"
+import { SegmentTable } from "./tables"
 
 interface SegmentClientWrapperProps extends VideoSegments {}
 
 export function SegmentClientWrapper(props: SegmentClientWrapperProps) {
+  const [segmentStore, setSegmentStore] = useState([])
+
   const isEmptySubmission = props.segments.length === 0
 
   const hasLocks = !(

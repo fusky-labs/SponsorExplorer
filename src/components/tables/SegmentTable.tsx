@@ -1,5 +1,5 @@
 import { Category } from "@/utils/SponsorBlock.types"
-import { SegmentBadge } from "./badges"
+import { SegmentBadge } from "../badges"
 import {
   LuEyeOff,
   LuLock,
@@ -8,7 +8,7 @@ import {
   LuXCircle,
 } from "react-icons/lu"
 import type { VideoSegments } from "@/types"
-import { cn } from "@/utils"
+import { cn, formatNumber } from "@/utils"
 
 interface SegmentTableProps
   extends Omit<VideoSegments, "lock" | "submissionCount"> {
@@ -16,8 +16,6 @@ interface SegmentTableProps
 }
 
 export function SegmentTable(props: SegmentTableProps) {
-  const formatYurMum = (x: number) => x.toLocaleString("en-US")
-
   return (
     <table className="w-full *:[&_tr]:px-2 *:[&_tr]:py-2.5 [&_td]:border-b [&_td]:border-neutral-200 text-base">
       <colgroup>
@@ -56,7 +54,7 @@ export function SegmentTable(props: SegmentTableProps) {
             <td>{new Date(x.timeSubmitted).toISOString()}</td>
             <td>
               <div className="inline-flex items-center gap-x-1">
-                <span>{formatYurMum(x.votes)}</span>
+                <span>{formatNumber(x.votes)}</span>
                 {x.locked ? (
                   <LuLock size={17} className="text-yellow-400" />
                 ) : null}
@@ -64,7 +62,7 @@ export function SegmentTable(props: SegmentTableProps) {
             </td>
             <td>
               <div className="inline-flex items-center gap-x-1">
-                <span>{formatYurMum(x.views)}</span>
+                <span>{formatNumber(x.views)}</span>
                 {x.shadowHidden ? (
                   <LuEyeOff size={17} className="text-red-500" />
                 ) : null}
