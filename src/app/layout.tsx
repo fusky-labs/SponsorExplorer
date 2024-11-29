@@ -37,7 +37,7 @@ export default function RootLayout({
         <Script
           id="umami"
           async
-          nonce={nonce as string}
+          nonce={nonce!}
           src="https://eu.umami.is/script.js"
         />
         <Navbar />

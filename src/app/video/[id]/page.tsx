@@ -26,7 +26,7 @@ export default async function VideoPage({ params, searchParams }: RouteParams) {
 
   const fetchSegments = await fetch(
     `${urlBase}/api/sponsorblock/segments?id=${params.id}`,
-    { cache: "force-cache", priority: "high" }
+    { priority: "high" },
   )
 
   const initialData = (await fetchSegments.json()) as VideoSegments
