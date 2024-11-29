@@ -1,17 +1,12 @@
 import { VideoInfo } from "@/components/headers"
 import { SegmentClientWrapper } from "@/components/SegmentClientWrapper"
-import type { VideoSegments } from "@/types"
+import type { DefineRouteParams, VideoSegments } from "@/types"
 import { headers } from "next/headers"
 
-interface RouteParams {
-  params: Promise<{
-    id: string
-  }>
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-}
+type RouteParams = DefineRouteParams<{ id: string }>
 
 export async function generateMetadata(props: RouteParams) {
-  const params = await props.params;
+  const params = await props.params
   return {
     title: `Segments from ${params.id}`,
     description: `Submissions by user id ${params.id}`,
@@ -19,8 +14,8 @@ export async function generateMetadata(props: RouteParams) {
 }
 
 export default async function VideoPage(props: RouteParams) {
-  const searchParams = await props.searchParams;
-  const params = await props.params;
+  const searchParams = await props.searchParams
+  const params = await props.params
   const urlBase = (await headers()).get("x-url-origin")
 
   const queryBypassCache = typeof searchParams["bypass-cache"] !== "undefined"
