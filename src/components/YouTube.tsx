@@ -26,41 +26,42 @@ export function YouTube(props: YouTubeProps) {
         },
       })
     }
+
     setTimeout(() => {
-      if (!window.YT) {
-        // Listen for DOM mutations
-        // So that the player and it's event listeners will be available from any connection speed
-        const headTags = new MutationObserver((mutations) => {
-          for (const muts of mutations) {
-            const addedNodes = Array.from(muts.addedNodes)
+      if (window.YT) return
 
-            const hasWidgetAPI = addedNodes.some(
-              (e) => (e as HTMLScriptElement).id === "www-widgetapi-script",
-            )
+      // Listen for DOM mutations
+      // So that the player and it's event listeners will be available from any connection speed
+      const headTags = new MutationObserver((mutations) => {
+        for (const muts of mutations) {
+          const addedNodes = Array.from(muts.addedNodes)
 
-            if (hasWidgetAPI) {
-              setTimeout(() => loadPlayer(), 80)
-            }
+          const hasWidgetAPI = addedNodes.some(
+            (e) => (e as HTMLScriptElement).id === "www-widgetapi-script",
+          )
+
+          if (hasWidgetAPI) {
+            setTimeout(() => loadPlayer(), 80)
           }
-        })
+        }
+      })
 
-        headTags.observe(document.head, { childList: true })
+      headTags.observe(document.head, { childList: true })
 
-        // Mount the YouTube JSAPI stuff
-        const iframeTag = Object.assign(document.createElement("script"), {
-          src: "https://www.youtube.com/iframe_api",
-        })
+      // Mount the YouTube JSAPI stuff
+      const iframeTag = Object.assign(document.createElement("script"), {
+        src: "https://www.youtube.com/iframe_api",
+      })
 
-        const firstScriptTag = document.getElementsByTagName("script")[0]
-        firstScriptTag.parentNode!.insertBefore(iframeTag, firstScriptTag)
+      const firstScriptTag = document.getElementsByTagName("script")[0]
+      firstScriptTag.parentNode!.insertBefore(iframeTag, firstScriptTag)
 
-        // Unmount observer after 10 secs
-        setTimeout(() => {
-          console.debug("Disconnected MutObserver")
-          headTags.disconnect()
-        }, 1000 * 10)
-        return
-      }
+      // Unmount observer after 10 secs
+      setTimeout(() => {
+        console.debug("Disconnected MutObserver")
+        headTags.disconnect()
+      }, 1000 * 10)
+      return
     }, 50)
   }, [props.id])
 

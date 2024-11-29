@@ -4,21 +4,24 @@ import type { VideoSegments } from "@/types"
 import { headers } from "next/headers"
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     id: string
-  }
-  searchParams: { [key: string]: string | string[] | undefined }
+  }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
-export async function generateMetadata({ params }: RouteParams) {
+export async function generateMetadata(props: RouteParams) {
+  const params = await props.params;
   return {
     title: `Segments from ${params.id}`,
     description: `Submissions by user id ${params.id}`,
   }
 }
 
-export default async function VideoPage({ params, searchParams }: RouteParams) {
-  const urlBase = headers().get("x-url-origin")
+export default async function VideoPage(props: RouteParams) {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
+  const urlBase = (await headers()).get("x-url-origin")
 
   const queryBypassCache = typeof searchParams["bypass-cache"] !== "undefined"
   const queryFilters = searchParams["filters"]

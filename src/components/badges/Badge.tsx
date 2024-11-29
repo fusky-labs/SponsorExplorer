@@ -9,7 +9,7 @@ export function Badge(props: React.PropsWithChildren<BadgeProps>) {
     <div
       className={cn(
         "px-3 py-[0.175rem] rounded-md overflow-hidden",
-        props.className
+        props.className,
       )}
     >
       {props.children}
