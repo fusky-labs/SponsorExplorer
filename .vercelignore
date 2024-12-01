@@ -1,2 +1,3 @@
-# Ignore pnpm lockfile and threat it as a local project
-sbbrowser-api/pnpm-lock.yaml
+# Ignore submodule used for development
+
+sbbrowser-api/
