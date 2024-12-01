@@ -53,6 +53,9 @@ export function YouTube(props: YouTubeProps) {
         src: "https://www.youtube.com/iframe_api",
       })
 
+      // Make sure the iframe API gets fetched first
+      iframeTag.setAttribute("fetchpriority", "high")
+
       const firstScriptTag = document.getElementsByTagName("script")[0]
       firstScriptTag.parentNode!.insertBefore(iframeTag, firstScriptTag)
 

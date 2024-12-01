@@ -4,9 +4,9 @@ export function middleware(request: NextRequest) {
   const nonce = Buffer.from(crypto.randomUUID()).toString("base64")
 
   const csp = `
-    script-src 'self' 'unsafe-eval' https://www.youtube.com/ 'nonce-${nonce}';
-    connect-src 'self' https://youtube.googleapis.com https://www.youtube.com/iframe_api/ https://sponsor.ajay.app;
-    frame-src https://www.youtube-nocookie.com;
+    script-src 'self' 'unsafe-eval' www.youtube.com 'nonce-${nonce}';
+    connect-src 'self' youtube.googleapis.com *.youtube.com sponsor.ajay.app;
+    frame-ancestors 'self' www.youtube-nocookie.com;
     upgrade-insecure-requests;
   `
 
