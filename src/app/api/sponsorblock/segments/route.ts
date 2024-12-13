@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
   if (segmentCount > 10) {
     const totalIterations = Math.ceil(segmentCount / 10) - 1
 
-    // Cap page iteration until 6 by default
+    // Cap page iteration until 8 by default
     if (totalIterations > pageTo) {
       _iterateCount = pageTo
     } else {

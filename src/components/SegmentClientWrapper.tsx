@@ -1,10 +1,11 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { LuFilter, LuHelpCircle, LuMoreVertical } from "react-icons/lu"
+import { useState } from "react"
+import { LuFilter, LuHelpCircle, LuMoreVertical, LuInfo } from "react-icons/lu"
 import { VideoSegments } from "@/types"
 import { LockedSegmentsNotice } from "./LockedSegmentsNotice"
 import { SegmentTable } from "./tables"
+import { Notice } from "./Notice"
 
 interface SegmentClientWrapperProps extends VideoSegments {}
 
@@ -58,7 +59,13 @@ export function SegmentClientWrapper(props: SegmentClientWrapperProps) {
         {!isEmptySubmission ? (
           <SegmentTable segments={props.segments} />
         ) : (
-          <div className="pt-4">EMPTY</div>
+          <div className="mt-4">
+            <Notice heading="No segments submitted" intent="info">
+              Couldn't fetch segments, either the video ID may be invalid, or
+              there are no submitted segments available for this video at this
+              time. Maybe a refresh will help?
+            </Notice>
+          </div>
         )}
       </div>
     </>
