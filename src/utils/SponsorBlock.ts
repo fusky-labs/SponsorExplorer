@@ -1,15 +1,7 @@
 const SB_API_BASE_URL = "https://sponsor.ajay.app/api"
 
+import { fetchWrapper } from "./fetchWrapper"
 import type { Category, Props, Responses } from "./SponsorBlock.types"
-
-export const isValidJSON = (str: string) => {
-  try {
-    JSON.parse(str)
-    return true
-  } catch {
-    return false
-  }
-}
 
 const unwrapArrayAsLiteral = (arr: string[]) => `[${arr.map((x) => `"${x}"`).toString()}]`
 
@@ -19,29 +11,10 @@ const parseURLSearchParams = <P extends object>(url: string, params?: P) => {
   const urlParams = Object.entries(params).map(([k, v]) => {
     // SponsorBlock-specific params
     if (k === "actionTypes" || k === "categories") return [k, unwrapArrayAsLiteral(v)]
-
     return [k, v]
   })
 
   return `${url}?${new URLSearchParams(urlParams)}`
-}
-
-const fetchWrapper = async <ReturnPromise = string>(
-  url: string,
-  init?: RequestInit
-): Promise<[ReturnPromise, number]> => {
-  const _req = await fetch(url, init)
-
-  const reqStatus = _req.status
-  const reqText = await _req.text() as ReturnPromise
-
-  console.debug("req url", url)
-
-  if (isValidJSON(reqText as string)) {
-    return [JSON.parse(reqText as string), reqStatus]
-  }
-
-  return [reqText, reqStatus]
 }
 
 /**

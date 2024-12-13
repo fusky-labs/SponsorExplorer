@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
   const videoID = urlParams.get("id")!
 
   const pageFrom = parseInt(urlParams.get("pageFrom")!) || null
-  const pageTo = parseInt(urlParams.get("pageTo")!) || 6
+  const pageTo = parseInt(urlParams.get("pageTo")!) || 8
 
   // Store all the accumulated segments fetched to be returned from the API
   let _totalSegments: Responses.SearchSegments['segments'] = []
@@ -48,7 +48,6 @@ export async function GET(request: NextRequest) {
 
     [...Array(_iterateCount)].forEach(async (_, i) => {
       const index = i + 1
-      console.log(index)
 
       const [_partialSegments] = await SponsorBlock.searchSegments({
         videoID,
