@@ -82,8 +82,8 @@ export async function GET(request: NextRequest) {
     segments: sortedSegments,
     lock: {
       skip: typeof lockedSkipSegments === "string" ? [] : lockedSkipSegments,
-      mute: typeof lockedSkipSegments === "string" ? [] : lockedMuteSegments,
-      full: typeof lockedSkipSegments === "string" ? [] : lockedFullSegments
+      mute: typeof lockedMuteSegments === "string" ? [] : lockedMuteSegments,
+      full: typeof lockedFullSegments === "string" ? [] : lockedFullSegments
     },
   }, {
     status: _status

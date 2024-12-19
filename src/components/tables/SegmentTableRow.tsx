@@ -7,7 +7,7 @@ import {
   LuTimerOff,
   LuXCircle,
 } from "react-icons/lu"
-import { cn, formatNumber } from "@/utils"
+import { cn, formatNumber, parseDateStr } from "@/utils"
 import { VideoSegments } from "@/types"
 import { LengthBadge } from "../badges/LengthBadge"
 
@@ -19,6 +19,8 @@ type Segment = Omit<
 interface SegmentTableRowProps extends Segment {}
 
 export function SegmentTableRow(props: SegmentTableRowProps) {
+  const { isoDate, readableDate } = parseDateStr(props.timeSubmitted)
+
   return (
     <tr
       className={cn(
@@ -27,7 +29,9 @@ export function SegmentTableRow(props: SegmentTableRowProps) {
           : undefined,
       )}
     >
-      <td>{new Date(props.timeSubmitted).toISOString()}</td>
+      <td>
+        <time dateTime={isoDate}>{readableDate}</time>
+      </td>
       <td>
         <div className="inline-flex items-center gap-x-1">
           <span>{formatNumber(props.votes)}</span>

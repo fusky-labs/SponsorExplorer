@@ -1,11 +1,4 @@
-const isValidJSON = (str: string) => {
-  try {
-    JSON.parse(str)
-    return true
-  } catch {
-    return false
-  }
-}
+import { isValidJSON } from "./parsers"
 
 export const fetchWrapper = async <ReturnPromise = string>(
   url: string,

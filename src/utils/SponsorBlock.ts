@@ -1,21 +1,8 @@
-const SB_API_BASE_URL = "https://sponsor.ajay.app/api"
-
 import { fetchWrapper } from "./fetchWrapper"
+import { parseURLSearchParams } from "./parsers"
 import type { Category, Props, Responses } from "./SponsorBlock.types"
 
-const unwrapArrayAsLiteral = (arr: string[]) => `[${arr.map((x) => `"${x}"`).toString()}]`
-
-const parseURLSearchParams = <P extends object>(url: string, params?: P) => {
-  if (!params) return url
-
-  const urlParams = Object.entries(params).map(([k, v]) => {
-    // SponsorBlock-specific params
-    if (k === "actionTypes" || k === "categories") return [k, unwrapArrayAsLiteral(v)]
-    return [k, v]
-  })
-
-  return `${url}?${new URLSearchParams(urlParams)}`
-}
+const SB_API_BASE_URL = "https://sponsor.ajay.app/api"
 
 /**
  * Get segments for a video.

@@ -26,7 +26,7 @@ export function SegmentTable(props: SegmentTableProps) {
           <th>Category</th>
           <th>Length</th>
           <th>
-            <span className="whitespace-nowrap">Username/User ID</span>
+            <span className="whitespace-nowrap">Username/UserID</span>
           </th>
           <th></th>
         </tr>

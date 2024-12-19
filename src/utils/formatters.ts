@@ -1,4 +1,4 @@
-export const parseDateStr = (dateStr: string) => {
+export const parseDateStr = <DT extends string | number | Date = string>(dateStr: DT) => {
   const d = new Date(dateStr)
 
   const options = {

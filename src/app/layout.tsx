@@ -22,13 +22,11 @@ export const metadata: Metadata = {
   },
 }
 
-export default async function RootLayout(
-  {
-    children,
-  }: Readonly<{
-    children: React.ReactNode
-  }>
-) {
+export default async function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
   const nonce = (await headers()).get("x-nonce")
 
   return (
@@ -40,7 +38,7 @@ export default async function RootLayout(
           id="umami"
           async
           nonce={nonce!}
-          src="https://eu.umami.is/script.js"
+          src="https://cloud.umami.is/script.js"
         />
         <Navbar />
         <div className="min-h-[calc(100dvh-5.75rem)]">{children}</div>
