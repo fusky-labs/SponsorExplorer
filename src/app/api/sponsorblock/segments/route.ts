@@ -1,6 +1,6 @@
 /* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { NextRequest, NextResponse } from "next/server"
+import { type NextRequest, NextResponse } from "next/server"
 import { allSegments, SponsorBlock } from "@/utils"
 import { Responses } from "@/utils/SponsorBlock.types"
 
