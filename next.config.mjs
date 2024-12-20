@@ -6,7 +6,6 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  transpilePackages: ["@googleapis/youtube"],
   images: {
     dangerouslyAllowSVG: true,
     remotePatterns: [
@@ -24,6 +23,11 @@ const nextConfig = {
       {
         source: "/c/:id",
         destination: "/channel/:id",
+        permanent: true
+      },
+      {
+        source: "/p/:id",
+        destination: "/playlist/:id",
         permanent: true
       }
     ]
