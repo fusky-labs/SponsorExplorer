@@ -1,10 +1,10 @@
 import { fetchWrapper } from "./fetchWrapper"
 import type { AllEndpointParams, AllPartLiterals } from "./YT.types"
 
-class APIKeyError extends Error {
+class APIKeyMissingError extends Error {
   constructor(message: string) {
     super(message)
-    this.name = "APIKeyError"
+    this.name = "APIKeyMissingError"
   }
 }
 
@@ -14,7 +14,7 @@ class YTURLConstructor {
 
   constructor() {
     if (!this.YT_API_KEY) {
-      throw new APIKeyError("No YouTube API key found.")
+      throw new APIKeyMissingError("YouTube API key not set, check your environment variables, cutie~")
     }
   }
 
