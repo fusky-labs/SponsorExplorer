@@ -27,3 +27,24 @@ export const parseURLSearchParams = <P extends object>(url: string, params?: P) 
 
   return `${url}?${new URLSearchParams(urlParams)}`
 }
+
+type AllConstructors =
+  | StringConstructor
+  | NumberConstructor
+  | BooleanConstructor
+  | DateConstructor
+  | ObjectConstructor
+
+type Primitives = string | number | boolean | Date | object
+
+/**
+ * Schema constructor for URL search parameters
+ * 
+ * @param C - The valid constructor type
+ * @param PT - The fallback value of the parameter corresponding to the defined constructor
+ */
+type URLSchemaConstructor<ConstructorType extends AllConstructors, PrimitiveType extends Primitives> = {
+  type: ConstructorType
+  optional?: true
+  fallbackValue?: PrimitiveType
+}

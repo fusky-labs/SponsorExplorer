@@ -25,5 +25,5 @@ interface PlaylistItemsParams {
   playlistId: string
 }
 
-export type AllPartLiterals = "snippet" | "contentDetails" | "statistics" | "status"
+export type AllPartLiterals = "snippet" | "contentDetails" | "statistics" | "status" | "paidProductPlacementDetails"
 export type AllEndpointParams = StandardParams & VideoParams & ChannelParams & PlaylistItemsParams & SearchParams

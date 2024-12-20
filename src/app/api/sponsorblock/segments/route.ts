@@ -48,12 +48,8 @@ export async function GET(request: NextRequest) {
   if (segmentCount > 10) {
     const totalIterations = Math.ceil(segmentCount / 10) - 1
 
-    // Cap page iteration until 8 by default
-    if (totalIterations > params.pageTo) {
-      _iterateCount = params.pageTo
-    } else {
-      _iterateCount = totalIterations
-    }
+    // Cap page iteration until 8 by default or the total iterations
+    _iterateCount = totalIterations > params.pageTo ? params.pageTo : totalIterations as number
 
     [...Array(_iterateCount)].forEach(async (_, i) => {
       const segmentIndex = i + 1
@@ -68,20 +64,20 @@ export async function GET(request: NextRequest) {
   }
 
   // Then we get the locked segments, if there's any
-  const [lockedSkipSegments] = await SponsorBlock.lockCategories({
-    videoID: params.id,
-    actionTypes: ["skip"]
-  })
-
-  const [lockedMuteSegments] = await SponsorBlock.lockCategories({
-    videoID: params.id,
-    actionTypes: ["mute"]
-  })
-
-  const [lockedFullSegments] = await SponsorBlock.lockCategories({
-    videoID: params.id,
-    actionTypes: ["full"]
-  })
+  const [[lockedSkipSegments], [lockedMuteSegments], [lockedFullSegments]] = await Promise.all([
+    SponsorBlock.lockCategories({
+      videoID: params.id,
+      actionTypes: ["skip"]
+    }),
+    SponsorBlock.lockCategories({
+      videoID: params.id,
+      actionTypes: ["mute"]
+    }),
+    SponsorBlock.lockCategories({
+      videoID: params.id,
+      actionTypes: ["full"]
+    })
+  ])
 
   // Sort the segments in descending order by default
   // @ts-expect-error: Dates are too type-strict to sort UNIX dates
