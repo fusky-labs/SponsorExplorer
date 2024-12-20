@@ -22,7 +22,7 @@ class YTURLConstructor {
     const _params = new URLSearchParams()
     _params.append("key", this.YT_API_KEY)
 
-    const { part, maxResults } = params
+    const { part } = params
 
     // part params
     if (!part) _params.append("part", "contentDetails")

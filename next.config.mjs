@@ -21,6 +21,11 @@ const nextConfig = {
         permanent: true
       },
       {
+        source: "/video/https\\:/youtu.be/:id",
+        destination: "/video/:id",
+        permanent: true
+      },
+      {
         source: "/c/:id",
         destination: "/channel/:id",
         permanent: true
