@@ -33,11 +33,11 @@ export function Modal(props: React.PropsWithChildren<ModalProps>) {
       />
 
       {/* Dialog contents */}
-      <div className={cn("fixed inset-0 grid place-items-center h-screen")}>
+      <div className="fixed inset-0 grid place-items-center h-screen">
         <DialogPanel
           transition
           className={cn(
-            " space-y-4 bg-white p-4 border-2 border-red-400 absolute w-fit max-w-lg transition ease-in-out rounded-xl",
+            "space-y-4 bg-white p-4 border-2 border-red-400 absolute w-fit max-w-lg transition ease-in-out rounded-xl",
             // Leave
             "duration-200 data-[closed]:translate-y-2 data-[closed]:opacity-0",
           )}

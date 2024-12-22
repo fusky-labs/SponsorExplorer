@@ -24,7 +24,7 @@ async function fetchVideoData(id: string) {
   const [fetchVideoInfo] = await fetchWrapper<VideoInfoType>(
     `${urlBase}/api/yt/video?id=${id}&min=1`,
     {
-      priority: "high",
+      cache: "no-store",
     },
   )
 
@@ -54,7 +54,7 @@ export default async function VideoPage(props: RouteParams) {
   const querySorts = searchParams.sort
   const queryTab = searchParams.tab
   // Will include a sidebar for any playlist or channel uploads to be displayed
-  const list = searchParams.list
+  const isParamsList = searchParams.list
 
   const urlBase = (await headers()).get("x-url-origin")
 
@@ -69,17 +69,19 @@ export default async function VideoPage(props: RouteParams) {
   ])
 
   return (
-    <div className="mt-4 mx-auto px-6 max-w-screen-2xl">
-      <SegmentStoreProvider initialData={initialData}>
-        <VideoInfo
-          id={params.id}
-          videoState={videoInfo.videoState}
-          video={videoInfo.video}
-        />
-        <TabStateProvider>
-          <SegmentClientWrapper />
-        </TabStateProvider>
-      </SegmentStoreProvider>
+    <div className="mt-4 flex">
+      <div className="mx-auto px-6 max-w-screen-2xl w-full">
+        <SegmentStoreProvider initialData={initialData}>
+          <VideoInfo
+            id={params.id}
+            videoState={videoInfo.videoState}
+            video={videoInfo.video}
+          />
+          <TabStateProvider>
+            <SegmentClientWrapper />
+          </TabStateProvider>
+        </SegmentStoreProvider>
+      </div>
     </div>
   )
 }
