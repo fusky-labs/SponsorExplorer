@@ -31,12 +31,16 @@ export function LengthBadge(props: LengthBadgeProps) {
         {props.actionType === "chapter" ? <ChapterIcon size={19} /> : null}
       </div>
       {props.actionType === "full" ? (
-        <span>Full video label</span>
+        <span className="text-sm">Full video label</span>
       ) : (
-        <div>
-          <span>{formatTimecode(props.startTime, timecodeOptions)}</span>
-          <span className="text-gray-400">{" – "}</span>
-          <span>{formatTimecode(props.endTime, timecodeOptions)}</span>
+        <div className="inline-flex gap-x-1 items-center">
+          <span className="text-sm">
+            {formatTimecode(props.startTime, timecodeOptions)}
+          </span>
+          <span className="inline-block h-[0.110rem] w-2.5 bg-black/50" />
+          <span className="text-sm">
+            {formatTimecode(props.endTime, timecodeOptions)}
+          </span>
         </div>
       )}
     </span>

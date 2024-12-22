@@ -23,7 +23,6 @@ export function SegmentTableRow(props: SegmentTableRowProps) {
 
   return (
     <tr
-      data-rendered={JSON.stringify(props)}
       className={cn(
         props.shadowHidden || props.hidden || props.votes <= -2
           ? "opacity-30 hover:opacity-100"
@@ -43,7 +42,11 @@ export function SegmentTableRow(props: SegmentTableRowProps) {
       </td>
       <td>
         <div className="inline-flex items-center gap-x-1">
-          <span>{formatNumber(props.views)}</span>
+          {props.actionType === "full" ? (
+            <span className="h-[0.115rem] w-4 bg-black" />
+          ) : (
+            <span>{formatNumber(props.views)}</span>
+          )}
           {props.shadowHidden ? (
             <LuEyeOff size={17} className="text-red-500" />
           ) : null}
@@ -62,11 +65,13 @@ export function SegmentTableRow(props: SegmentTableRowProps) {
         />
       </td>
       <td>
-        <LengthBadge
-          actionType={props.actionType}
-          endTime={props.endTime}
-          startTime={props.startTime}
-        />
+        <div className="flex items-center">
+          <LengthBadge
+            actionType={props.actionType}
+            endTime={props.endTime}
+            startTime={props.startTime}
+          />
+        </div>
       </td>
       <td>{props.userID.slice(0, 12)}</td>
       <td>

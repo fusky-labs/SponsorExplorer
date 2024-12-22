@@ -7,7 +7,8 @@ export async function GET(request: NextRequest) {
   const urlParams = new URL(request.url).searchParams
 
   const videoID = urlParams.get("id")!
-  const [videoData, status] = await youtube.videos(videoID, {
+  const [videoData, status] = await youtube.videos({
+    id: videoID,
     part: ["snippet", "paidProductPlacementDetails"],
   })
 

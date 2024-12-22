@@ -1,4 +1,10 @@
 /**
+ * A simple function that pads an undefined array used for iterations of
+ * a specific number
+ */
+export const padIterations = (iterations: number) => [...Array(iterations)]
+
+/**
  * Check if a string is a valid JSON
  * 
  * @param jsonString - The string to check

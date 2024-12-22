@@ -1,7 +1,7 @@
 /* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { type NextRequest, NextResponse } from "next/server"
-import { allSegments, SponsorBlock } from "@/utils"
+import { allSegments, padIterations, SponsorBlock } from "@/utils"
 import { Responses } from "@/utils/SponsorBlock.types"
 
 type SortByLiteral = "asc" | "desc"
@@ -54,16 +54,18 @@ export async function GET(request: NextRequest) {
     // Cap page iteration until 8 by default or the total iterations
     _iterateCount = totalIterations > params.pageTo ? params.pageTo : totalIterations as number
 
-    [...Array(_iterateCount)].forEach(async (_, i) => {
+    const segmentPromises = padIterations(_iterateCount).map((_, i) => {
       const segmentIndex = i + 1
 
-      const [_partialSegments] = await SponsorBlock.searchSegments({
+      return SponsorBlock.searchSegments({
         videoID: params.id,
         page: segmentIndex
+      }).then(([partialSegments]) => {
+        _storeTotalSegments(partialSegments.segments)
       })
-
-      _storeTotalSegments(_partialSegments.segments)
     })
+
+    await Promise.all(segmentPromises)
   }
 
   // Then we get the locked segments, if there's any
