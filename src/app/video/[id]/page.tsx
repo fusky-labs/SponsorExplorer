@@ -15,7 +15,7 @@ type RouteParams = DefineRouteParams<
     compareModal: boolean
     historyModal: boolean
     segmentLockModal: boolean
-    fromList: string
+    list: string
   }>
 >
 
@@ -54,7 +54,7 @@ export default async function VideoPage(props: RouteParams) {
   const querySorts = searchParams.sort
   const queryTab = searchParams.tab
   // Will include a sidebar for any playlist or channel uploads to be displayed
-  const fromList = searchParams.fromList
+  const list = searchParams.list
 
   const urlBase = (await headers()).get("x-url-origin")
 

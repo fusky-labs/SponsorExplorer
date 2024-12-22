@@ -6,7 +6,7 @@ export function Footer() {
 
   return (
     <footer className="mt-4 dark:bg-neutral-900 border-t border-neutral-600">
-      <div className="px-6 py-8 mx-auto max-w-screen-2xl">
+      <div className="px-6 py-7 mx-auto max-w-screen-2xl">
         <article className="last:prose-p:mb-0 prose-p:mb-1.5">
           <p>
             <strong>SponsorExplorer</strong> is a rewrite of the{" "}

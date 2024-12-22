@@ -20,13 +20,22 @@ export function _Link(
         React.AnchorHTMLAttributes<HTMLAnchorElement>,
         "className" | "translate"
       >
-  >
+  >,
 ) {
+  const hrefStartsWithHttp = props.href.startsWith("http")
   return (
     <Link
       {...props}
       href={props.href}
       className={cn("underline hover:no-underline", props.className)}
+      target={
+        hrefStartsWithHttp || props.explicitExternal ? "_blank" : undefined
+      }
+      rel={
+        hrefStartsWithHttp || props.explicitExternal
+          ? "noopener noreferrer"
+          : undefined
+      }
     >
       {props.children}
     </Link>
