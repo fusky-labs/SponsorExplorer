@@ -1,9 +1,21 @@
 import { VideoInfo } from "@/components/headers"
 import { SegmentClientWrapper } from "@/components/SegmentClientWrapper"
+import { TabStateProvider } from "@/context"
 import type { DefineRouteParams, VideoSegments } from "@/types"
+import type { Metadata } from "next"
 import { headers } from "next/headers"
 
-type RouteParams = DefineRouteParams<{ id: string }>
+type RouteParams = DefineRouteParams<
+  { id: string },
+  Partial<{
+    filters: string
+    sort: string
+    tab: "all" | "chapters" | "segments"
+    compareModal: boolean
+    historyModal: boolean
+    segmentLockModal: boolean
+  }>
+>
 
 async function fetchVideoData(id: string) {
   const urlBase = (await headers()).get("x-url-origin")
@@ -14,7 +26,7 @@ async function fetchVideoData(id: string) {
   return await fetchVideoInfo.json()
 }
 
-export async function generateMetadata(props: RouteParams) {
+export async function generateMetadata(props: RouteParams): Promise<Metadata> {
   const params = await props.params
   const { video } = await fetchVideoData(params.id)
 
@@ -32,10 +44,12 @@ export async function generateMetadata(props: RouteParams) {
 export default async function VideoPage(props: RouteParams) {
   const searchParams = await props.searchParams
   const params = await props.params
-  const urlBase = (await headers()).get("x-url-origin")
 
-  const queryFilters = searchParams["filters"]
-  const querySorts = searchParams["sort"]
+  const queryFilters = searchParams.filters
+  const querySorts = searchParams.sort
+  const queryTab = searchParams.tab
+
+  const urlBase = (await headers()).get("x-url-origin")
 
   const [videoInfo, fetchSegments] = await Promise.all([
     fetchVideoData(params.id),
@@ -53,7 +67,9 @@ export default async function VideoPage(props: RouteParams) {
         videoState={videoInfo.state}
         video={videoInfo.video}
       />
-      <SegmentClientWrapper {...initialData} />
+      <TabStateProvider>
+        <SegmentClientWrapper {...initialData} />
+      </TabStateProvider>
     </div>
   )
 }

@@ -63,7 +63,7 @@ const fetchVideos = async (id: string, params?: Omit<Partial<AllEndpointParams>,
 const fetchChannels = async (id: string, params?: Omit<Partial<AllEndpointParams>, "id">) => {
   const endpoint = ytUrl.createEndpoint("/channel", { id, ...params })
 
-  return fetchWrapper(endpoint)
+  return fetchWrapper(endpoint, { cache: "force-cache" })
 }
 
 const youtube = {
