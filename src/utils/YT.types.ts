@@ -16,17 +16,17 @@ interface ChannelParams {
 
 // We're limiting the search to channels only
 interface SearchParams {
-  id: string
   q: string
+  type: "channel"
 }
 
 interface PlaylistItemsParams {
-  id: string
+  id: string | string[]
   playlistId: string
 }
 
 export type AllPartLiterals = "snippet" | "contentDetails" | "statistics" | "status" | "paidProductPlacementDetails"
-export type AllEndpointParams = StandardParams & VideoParams & ChannelParams & PlaylistItemsParams & SearchParams
+export type AllEndpointParams = Partial<StandardParams & VideoParams & ChannelParams & PlaylistItemsParams & SearchParams>
 
 interface VideoItems {
   snippet: {
@@ -42,7 +42,6 @@ interface VideoItems {
 }
 
 export interface YTVideoResponse {
-  kind: "youtube#videoListResponse"
   etag: string
   nextPageToken: string
   prevPageToken: string
@@ -69,7 +68,6 @@ export interface ChannelItems {
         url: string
       }
     }
-
   }
   contentDetails: {
     relatedPlaylists: {

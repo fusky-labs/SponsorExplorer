@@ -1,5 +1,5 @@
 import { fetchWrapper } from "./fetchWrapper"
-import type { AllEndpointParams, AllPartLiterals, YTChannelResponse, YTVideoResponse } from "./YT.types"
+import type { AllEndpointParams, YTChannelResponse, YTVideoResponse } from "./YT.types"
 
 class APIKeyMissingError extends Error {
   constructor(message: string) {
@@ -11,30 +11,33 @@ class APIKeyMissingError extends Error {
 class YTURLConstructor {
   private readonly YT_API_BASE_URL = "https://www.googleapis.com/youtube/v3"
   private YT_API_KEY = process.env.YT_API_KEY as string
+  private searchParamsCollection: URLSearchParams
 
-  createEndpoint(route: `/${string}`, params: Partial<AllEndpointParams>) {
+  constructor() {
+    this.searchParamsCollection = new URLSearchParams()
+  }
+
+  createEndpoint(route: `/${string}`, params: AllEndpointParams) {
     if (!this.YT_API_KEY) {
       throw new APIKeyMissingError("YouTube API key not set, check your environment variables or .env file")
     }
-
-    const _params = new URLSearchParams()
-    _params.append("key", this.YT_API_KEY)
+    this.searchParamsCollection.append("key", this.YT_API_KEY)
 
     const { part } = params
 
     // part params
-    if (!part) _params.append("part", "contentDetails")
-    if (part && typeof part === "string") _params.append("part", part)
-    if (part && Array.isArray(part)) _params.append("part", part.join(","))
+    if (!part) this.searchParamsCollection.append("part", "contentDetails")
+    if (part && typeof part === "string") this.searchParamsCollection.append("part", part)
+    if (part && Array.isArray(part)) this.searchParamsCollection.append("part", part.join(","))
 
     // append the rest
-    for (const [key, value] of Object.entries(params)) {
-      if (key !== "part" && key !== "maxResults") {
-        _params.append(key, value as string)
+    Object.entries(params).forEach(([k, v]) => {
+      if (k !== "part" && k !== "maxResults") {
+        this.searchParamsCollection.append(k, v.toString())
       }
-    }
+    })
 
-    const finalParams = `?${_params.toString()}`
+    const finalParams = `?${this.searchParamsCollection.toString()}`
 
     return `${this.YT_API_BASE_URL}${route}${finalParams}`
   }
@@ -42,31 +45,49 @@ class YTURLConstructor {
 
 const ytUrl = new YTURLConstructor()
 
+const _ytFetchOptions = { cache: "force-cache" } satisfies RequestInit
+
 /**
- * Retrieve information about one or more videos.
- * 
  * @link https://developers.google.com/youtube/v3/docs/videos/list
  */
-const fetchVideos = async (id: string, params?: Partial<AllEndpointParams>) => {
+const fetchVideos = async (id: string, params?: AllEndpointParams) => {
   const endpoint = ytUrl.createEndpoint("/videos", { id, ...params })
 
-  return fetchWrapper<YTVideoResponse>(endpoint, { cache: "force-cache" })
+  return fetchWrapper<YTVideoResponse>(endpoint, _ytFetchOptions)
 }
 
 /**
- * Retrieve channel information.
- * 
  * @link https://developers.google.com/youtube/v3/docs/channels/list
  */
-const fetchChannels = async (params: Partial<AllEndpointParams>) => {
+const fetchChannels = async (params: AllEndpointParams) => {
   const endpoint = ytUrl.createEndpoint("/channel", { ...params })
 
-  return fetchWrapper<YTChannelResponse>(endpoint, { cache: "force-cache" })
+  return fetchWrapper<YTChannelResponse>(endpoint, _ytFetchOptions)
+}
+
+/**
+ * @link https://developers.google.com/youtube/v3/docs/playlists/list
+ */
+const fetchPlaylistItems = async (params: AllEndpointParams) => {
+  const endpoint = ytUrl.createEndpoint("/playlistItems", { ...params })
+
+  return fetchWrapper<YTChannelResponse>(endpoint, _ytFetchOptions)
+}
+
+/**
+ * @link https://developers.google.com/youtube/v3/docs/search/list
+ */
+const fetchSearch = async (params: AllEndpointParams) => {
+  const endpoint = ytUrl.createEndpoint("/search", { ...params })
+
+  return fetchWrapper<YTChannelResponse>(endpoint, _ytFetchOptions)
 }
 
 const youtube = {
   videos: fetchVideos,
   channels: fetchChannels,
+  playlistItems: fetchPlaylistItems,
+  search: fetchSearch,
 }
 
 export { youtube }
