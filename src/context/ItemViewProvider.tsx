@@ -5,12 +5,12 @@ import { noop } from "lodash-es"
 
 type ViewType = "list" | "grid" | "compact"
 
-interface ViewItemState {
+interface ViewStateContextType {
   view: ViewType
   setView: React.Dispatch<React.SetStateAction<ViewType>>
 }
 
-const ViewStateContext = createContext<ViewItemState>({
+const ViewStateContext = createContext<ViewStateContextType>({
   view: "grid",
   setView: noop,
 })

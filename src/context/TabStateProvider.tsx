@@ -3,12 +3,12 @@
 import { createContext, useContext, useState } from "react"
 import { noop } from "lodash-es"
 
-interface TabState {
+interface TabStateContextType {
   activeTab: string
   setActiveTab: React.Dispatch<React.SetStateAction<string>>
 }
 
-const TabStateContext = createContext<TabState>({
+const TabStateContext = createContext<TabStateContextType>({
   activeTab: "",
   setActiveTab: noop,
 })

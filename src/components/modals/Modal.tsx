@@ -37,9 +37,9 @@ export function Modal(props: React.PropsWithChildren<ModalProps>) {
         <DialogPanel
           transition
           className={cn(
-            "max-w-lg space-y-4  bg-white p-4 border-2 border-red-600 absolute w-48 transition ease-in-out rounded-xl",
+            "max-w-lg space-y-4 bg-white p-4 border-2 border-red-400 absolute w-48 transition ease-in-out rounded-xl",
             // Leave
-            "duration-200 data-[closed]:translate-y-2 data-[closed]:opacity-0"
+            "duration-200 data-[closed]:translate-y-2 data-[closed]:opacity-0",
           )}
         >
           {/* Titlebar */}

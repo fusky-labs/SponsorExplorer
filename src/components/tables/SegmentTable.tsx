@@ -2,7 +2,7 @@ import type { VideoSegments } from "@/types"
 import { SegmentTableRow } from "./SegmentTableRow"
 
 interface SegmentTableProps
-  extends Omit<VideoSegments, "lock" | "submissionCount"> {
+  extends Omit<VideoSegments, "lock" | "submissionCount" | "totalIterations"> {
   selectMode?: boolean
 }
 
@@ -20,11 +20,21 @@ export function SegmentTable(props: SegmentTableProps) {
       </colgroup>
       <thead className="*:text-left">
         <tr className="sticky top-28 z-20 bg-white">
-          <th>Date submitted</th>
-          <th>Votes</th>
-          <th>Views</th>
-          <th>Category</th>
-          <th>Length</th>
+          <th>
+            <span className="whitespace-nowrap">Date submitted</span>
+          </th>
+          <th>
+            <span className="whitespace-nowrap">Votes</span>
+          </th>
+          <th>
+            <span className="whitespace-nowrap">Views</span>
+          </th>
+          <th>
+            <span className="whitespace-nowrap">Category</span>
+          </th>
+          <th>
+            <span className="whitespace-nowrap">Length</span>
+          </th>
           <th>
             <span className="whitespace-nowrap">Username/UserID</span>
           </th>

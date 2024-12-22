@@ -1,11 +1,9 @@
 "use client"
 
-import { LuBookmark, LuSearch, LuSettings } from "react-icons/lu"
-
-import { _Link as Link } from "../Link"
-import { NavbarOptions } from "./NavbarOptions"
 import { useState } from "react"
-import { NavbarSearch } from "./NavbarSearch"
+import { LuBookmark, LuSearch, LuSettings } from "react-icons/lu"
+import { _Link as Link } from "../Link"
+import { NavbarOptionsModal, NavbarSearchModal } from "../modals"
 
 export function Navbar() {
   const [searchToggle, setSearchDialogToggle] = useState(false)
@@ -31,34 +29,33 @@ export function Navbar() {
           <div className="flex-1 block lg:hidden"></div>
           {/* Breadcrumbs: Desktop */}
           <div className="flex-1 lg:flex items-center gap-x-3 text-base hidden">
-            <div className="inline-flex items-center gap-x-1.5">
-              <div className="size-6 rounded-full bg-red-600" />
-              <span>base-dir</span>
-            </div>
-            <span className="h-4 border-l border-l-black rotate-[18deg]" />
-            <div>video-route</div>
+            {/* <button>Open playlist shelf</button> */}
           </div>
           <div className="flex gap-x-1">
             <button
-              className="px-2 py-1 w-60 gap-x-1.5 rounded-md border-2 border-red-200"
+              className="px-2 py-1 w-60 gap-x-1.5 rounded-md md:block hidden border-2 border-red-200"
               onClick={toggleSearchDialog}
+              aria-labelledby="search-label"
             >
               <div className="hidden lg:flex">
-                <LuSearch size={19} />
-                <span className="opacity-50 ml-1">Search</span>
+                <LuSearch size={19} className="opacity-65" />
+                <span id="search-label" className="opacity-50 ml-1">
+                  Search
+                </span>
               </div>
             </button>
             <button
-              className="p-2 rounded-md bg-red-200 hover:bg-red-300 block md:hidden"
+              className="p-2 opacity-65 hover:opacity-100 block md:hidden"
               onClick={toggleSearchDialog}
+              aria-label="Search"
             >
               <LuSearch size={20} />
             </button>
-            <button className="p-2 rounded-md bg-red-200 hover:bg-red-300 hidden md:block">
+            <button className="p-2 opacity-65 hover:opacity-100 hidden md:block">
               <LuBookmark size={20} />
             </button>
             <button
-              className="p-2 rounded-md bg-red-200 hover:bg-red-300"
+              className="p-2 opacity-65 hover:opacity-100"
               onClick={toggleOptionDialog}
             >
               <LuSettings size={20} />
@@ -67,8 +64,8 @@ export function Navbar() {
         </nav>
       </div>
       {/* Modals */}
-      <NavbarOptions open={optionsToggle} onClose={toggleOptionDialog} />
-      <NavbarSearch open={searchToggle} onClose={toggleSearchDialog} />
+      <NavbarOptionsModal open={optionsToggle} onClose={toggleOptionDialog} />
+      <NavbarSearchModal open={searchToggle} onClose={toggleSearchDialog} />
     </>
   )
 }

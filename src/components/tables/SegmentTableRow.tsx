@@ -23,6 +23,7 @@ export function SegmentTableRow(props: SegmentTableRowProps) {
 
   return (
     <tr
+      data-rendered={JSON.stringify(props)}
       className={cn(
         props.shadowHidden || props.hidden || props.votes <= -2
           ? "opacity-30 hover:opacity-100"

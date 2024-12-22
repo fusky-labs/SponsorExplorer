@@ -1,27 +1,25 @@
 "use client"
 
-import { useState } from "react"
 import { LuFilter, LuHelpCircle, LuMoreVertical, LuInfo } from "react-icons/lu"
-import { VideoSegments } from "@/types"
 import { LockedSegmentsNotice } from "./LockedSegmentsNotice"
 import { SegmentTable } from "./tables"
 import { Notice } from "./Notice"
+import { useSegmentStoreContext } from "@/context"
 
-interface SegmentClientWrapperProps extends VideoSegments {}
+export function SegmentClientWrapper() {
+  const { segmentData } = useSegmentStoreContext()
 
-export function SegmentClientWrapper(props: SegmentClientWrapperProps) {
-  const [segmentStore, setSegmentStore] = useState([])
-
-  const isEmptySubmission = props.segments.length === 0
+  const isEmptySubmission = segmentData?.segments?.length === 0
 
   const hasLocks = !(
-    props.lock.skip.length === 0 &&
-    props.lock.mute.length === 0 &&
-    props.lock.full.length === 0
+    segmentData?.lock?.skip.length === 0 &&
+    segmentData?.lock?.mute.length === 0 &&
+    segmentData?.lock?.full.length === 0
   )
 
   return (
     <>
+      {/* Lock notices */}
       <div className="my-4">{hasLocks ? <LockedSegmentsNotice /> : null}</div>
       <div className="relative flex flex-col gap-y-2.5">
         {/* Filter stuff */}
@@ -30,8 +28,8 @@ export function SegmentClientWrapper(props: SegmentClientWrapperProps) {
           aria-hidden
         />
         <div className="bg-white sticky top-16 z-20 flex gap-x-2.5">
-          <div className="rounded-md border flex">
-            <button className="rounded-md px-2 py-0.5 bg-red-200 font-medium">
+          <div className="rounded-md border flex p-1 border-neutral-200">
+            <button className="rounded-md px-2 py-1 bg-neutral-300 font-medium">
               All
             </button>
             <button className="rounded-md px-2.5 py-1">Segments</button>
@@ -39,14 +37,8 @@ export function SegmentClientWrapper(props: SegmentClientWrapperProps) {
           </div>
           <div className="flex-1 relative flex rounded-md border">
             <div className="absolute left-2 inset-y-0 flex items-center">
-              <LuFilter size={16} className="" />
+              <LuFilter size={19} />
             </div>
-            <div className="w-8" aria-hidden />
-            <input
-              className="flex-1 h-full outline-none"
-              type="text"
-              placeholder="Filter segments"
-            />
           </div>
           <button>
             <LuMoreVertical size={19} />
@@ -57,7 +49,7 @@ export function SegmentClientWrapper(props: SegmentClientWrapperProps) {
         </div>
         {/* Tables */}
         {!isEmptySubmission ? (
-          <SegmentTable segments={props.segments} />
+          <SegmentTable segments={segmentData!.segments!} />
         ) : (
           <div className="mt-4">
             <Notice heading="No segments submitted" intent="info">

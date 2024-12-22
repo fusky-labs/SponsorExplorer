@@ -1,5 +1,5 @@
 import { fetchWrapper } from "./fetchWrapper"
-import type { AllEndpointParams, AllPartLiterals } from "./YT.types"
+import type { AllEndpointParams, AllPartLiterals, YTChannelResponse, YTVideoResponse } from "./YT.types"
 
 class APIKeyMissingError extends Error {
   constructor(message: string) {
@@ -12,13 +12,11 @@ class YTURLConstructor {
   private readonly YT_API_BASE_URL = "https://www.googleapis.com/youtube/v3"
   private YT_API_KEY = process.env.YT_API_KEY as string
 
-  constructor() {
-    if (!this.YT_API_KEY) {
-      throw new APIKeyMissingError("YouTube API key not set, check your environment variables, cutie~")
-    }
-  }
-
   createEndpoint(route: `/${string}`, params: Partial<AllEndpointParams>) {
+    if (!this.YT_API_KEY) {
+      throw new APIKeyMissingError("YouTube API key not set, check your environment variables or .env file")
+    }
+
     const _params = new URLSearchParams()
     _params.append("key", this.YT_API_KEY)
 
@@ -45,14 +43,14 @@ class YTURLConstructor {
 const ytUrl = new YTURLConstructor()
 
 /**
- * Retrieve video information.
+ * Retrieve information about one or more videos.
  * 
  * @link https://developers.google.com/youtube/v3/docs/videos/list
  */
-const fetchVideos = async (id: string, params?: Omit<Partial<AllEndpointParams>, "id">) => {
+const fetchVideos = async (id: string, params?: Partial<AllEndpointParams>) => {
   const endpoint = ytUrl.createEndpoint("/videos", { id, ...params })
 
-  return fetchWrapper(endpoint, { cache: "force-cache" })
+  return fetchWrapper<YTVideoResponse>(endpoint, { cache: "force-cache" })
 }
 
 /**
@@ -60,10 +58,10 @@ const fetchVideos = async (id: string, params?: Omit<Partial<AllEndpointParams>,
  * 
  * @link https://developers.google.com/youtube/v3/docs/channels/list
  */
-const fetchChannels = async (id: string, params?: Omit<Partial<AllEndpointParams>, "id">) => {
-  const endpoint = ytUrl.createEndpoint("/channel", { id, ...params })
+const fetchChannels = async (params: Partial<AllEndpointParams>) => {
+  const endpoint = ytUrl.createEndpoint("/channel", { ...params })
 
-  return fetchWrapper(endpoint, { cache: "force-cache" })
+  return fetchWrapper<YTChannelResponse>(endpoint, { cache: "force-cache" })
 }
 
 const youtube = {

@@ -1,7 +1,8 @@
 import { VideoInfo } from "@/components/headers"
 import { SegmentClientWrapper } from "@/components/SegmentClientWrapper"
-import { TabStateProvider } from "@/context"
-import type { DefineRouteParams, VideoSegments } from "@/types"
+import { SegmentStoreProvider, TabStateProvider } from "@/context"
+import type { DefineRouteParams, VideoInfoType, VideoSegments } from "@/types"
+import { fetchWrapper } from "@/utils/fetchWrapper"
 import type { Metadata } from "next"
 import { headers } from "next/headers"
 
@@ -14,16 +15,20 @@ type RouteParams = DefineRouteParams<
     compareModal: boolean
     historyModal: boolean
     segmentLockModal: boolean
+    fromList: string
   }>
 >
 
 async function fetchVideoData(id: string) {
   const urlBase = (await headers()).get("x-url-origin")
-  const fetchVideoInfo = await fetch(`${urlBase}/api/yt/video?id=${id}&min=1`, {
-    priority: "high",
-  })
+  const [fetchVideoInfo] = await fetchWrapper<VideoInfoType>(
+    `${urlBase}/api/yt/video?id=${id}&min=1`,
+    {
+      priority: "high",
+    },
+  )
 
-  return await fetchVideoInfo.json()
+  return fetchVideoInfo
 }
 
 export async function generateMetadata(props: RouteParams): Promise<Metadata> {
@@ -37,7 +42,7 @@ export async function generateMetadata(props: RouteParams): Promise<Metadata> {
   }
 
   return {
-    title: `Segments from "${video.title}"`,
+    title: `Segments from "${video.title}" by ${video.channelTitle}`,
   }
 }
 
@@ -48,28 +53,33 @@ export default async function VideoPage(props: RouteParams) {
   const queryFilters = searchParams.filters
   const querySorts = searchParams.sort
   const queryTab = searchParams.tab
+  // Will include a sidebar for any playlist or channel uploads to be displayed
+  const fromList = searchParams.fromList
 
   const urlBase = (await headers()).get("x-url-origin")
 
-  const [videoInfo, fetchSegments] = await Promise.all([
+  const [videoInfo, [initialData]] = await Promise.all([
     fetchVideoData(params.id),
-    fetch(`${urlBase}/api/sponsorblock/segments?id=${params.id}`, {
-      priority: "high",
-    }),
+    fetchWrapper<VideoSegments>(
+      `${urlBase}/api/sponsorblock/segments?id=${params.id}`,
+      {
+        priority: "high",
+      },
+    ),
   ])
-
-  const initialData = (await fetchSegments.json()) as VideoSegments
 
   return (
     <div className="mt-4 mx-auto px-6 max-w-screen-2xl">
-      <VideoInfo
-        id={params.id}
-        videoState={videoInfo.state}
-        video={videoInfo.video}
-      />
-      <TabStateProvider>
-        <SegmentClientWrapper {...initialData} />
-      </TabStateProvider>
+      <SegmentStoreProvider initialData={initialData}>
+        <VideoInfo
+          id={params.id}
+          videoState={videoInfo.videoState}
+          video={videoInfo.video}
+        />
+        <TabStateProvider>
+          <SegmentClientWrapper />
+        </TabStateProvider>
+      </SegmentStoreProvider>
     </div>
   )
 }

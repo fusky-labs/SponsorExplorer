@@ -1,11 +1,11 @@
 "use client"
 
-import type { NavbarDialogTypes } from "./Navbar.types"
-import { Modal } from "../Modal"
+import type { NavbarDialogTypes } from "../base/Navbar.types"
+import { Modal } from "./Modal"
 
 interface NavbarOptionsProps extends NavbarDialogTypes {}
 
-export function NavbarOptions(props: NavbarOptionsProps) {
+export function NavbarOptionsModal(props: NavbarOptionsProps) {
   return (
     <Modal open={props.open} onClose={props.onClose} title="Options">
       <div>

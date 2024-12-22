@@ -63,7 +63,7 @@ export namespace Responses {
     page: number
     segments: Array<{
       UUID: string,
-      timeSubmitted: number,
+      timeSubmitted: string,
       startTime: number,
       endTime: number,
       category: string,

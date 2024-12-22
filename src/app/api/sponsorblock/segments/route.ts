@@ -44,9 +44,12 @@ export async function GET(request: NextRequest) {
   // Push initial segments
   if (searchSegmentsStatus !== 404) _storeTotalSegments(segments)
 
+  // Will be used to calculate the total iterations and to be used client-side for pagination
+  let totalIterations = 0
+
   // Check if the submitted segments are more than 10, then we iterate it
   if (segmentCount > 10) {
-    const totalIterations = Math.ceil(segmentCount / 10) - 1
+    totalIterations = Math.ceil(segmentCount / 10) - 1
 
     // Cap page iteration until 8 by default or the total iterations
     _iterateCount = totalIterations > params.pageTo ? params.pageTo : totalIterations as number
@@ -79,15 +82,21 @@ export async function GET(request: NextRequest) {
     })
   ])
 
+  // Convert the timeSubmitted to a UTC string
+  _totalSegments.map((segment) => {
+    segment.timeSubmitted = new Date(segment.timeSubmitted).toUTCString()
+  })
+
   // Sort the segments in descending order by default
   // @ts-expect-error: Dates are too type-strict to sort UNIX dates
-  const sortedSegments = _totalSegments.sort((a, b) => (new Date(b.timeSubmitted) - new Date(a.timeSubmitted)))
+  const sortedSegments = _totalSegments.sort((a, b) => (new Date(a.timeSubmitted) - new Date(b.timeSubmitted)))
 
   const lockedSegmentsFallback = (lockedSegments: Responses.LockCategories) => {
     return typeof lockedSegments === "string" ? [] : lockedSkipSegments
   }
 
   return NextResponse.json({
+    totalIterations,
     submissionCount: segmentCount,
     segments: sortedSegments,
     lock: {

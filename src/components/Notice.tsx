@@ -30,6 +30,7 @@ export function Notice(
 ) {
   const iconProps = {
     size: 20,
+    className: "flex-shrink-0",
   }
 
   return (
