@@ -1,5 +1,6 @@
 import { VideoInfo } from "@/components/headers"
 import { SegmentClientWrapper } from "@/components/SegmentClientWrapper"
+import { VideoListSidebar } from "@/components/VideoListSidebar"
 import { SegmentStoreProvider, TabStateProvider } from "@/context"
 import type { DefineRouteParams, VideoInfoType, VideoSegments } from "@/types"
 import { fetchWrapper } from "@/utils/fetchWrapper"
@@ -69,7 +70,12 @@ export default async function VideoPage(props: RouteParams) {
   ])
 
   return (
-    <div className="mt-4 flex">
+    <div className="mt-4 flex" data-video-idroot="">
+      {isParamsList ? (
+        <div className="[align-self:start] sticky top-16 flex-shrink-0 h-[90dvh] max-w-[300px]">
+          <VideoListSidebar />
+        </div>
+      ) : null}
       <div className="mx-auto px-6 max-w-screen-2xl w-full">
         <SegmentStoreProvider initialData={initialData}>
           <VideoInfo

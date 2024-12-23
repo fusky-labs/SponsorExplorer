@@ -7,6 +7,7 @@ import { Navbar, Footer } from "@/components/base"
 import { headers } from "next/headers"
 import Script from "next/script"
 import { cn } from "@/utils"
+import { VideoListPeekProvider } from "@/context"
 
 const inter = Inter({
   weight: ["400", "500", "600", "700"],
@@ -40,8 +41,10 @@ export default async function RootLayout({
           nonce={nonce!}
           src="https://cloud.umami.is/script.js"
         />
-        <Navbar />
-        <div className="min-h-[calc(100dvh-5.75rem)]">{children}</div>
+        <VideoListPeekProvider>
+          <Navbar />
+          <div className="min-h-[calc(100dvh-5.75rem)]">{children}</div>
+        </VideoListPeekProvider>
         <Footer />
       </body>
     </html>
