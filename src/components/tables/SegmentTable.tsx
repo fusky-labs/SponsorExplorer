@@ -1,8 +1,7 @@
 import type { VideoSegments } from "@/types"
 import { SegmentTableRow } from "./SegmentTableRow"
 
-interface SegmentTableProps
-  extends Omit<VideoSegments, "lock" | "submissionCount" | "totalIterations"> {
+interface SegmentTableProps extends Pick<VideoSegments, "segments"> {
   selectMode?: boolean
 }
 

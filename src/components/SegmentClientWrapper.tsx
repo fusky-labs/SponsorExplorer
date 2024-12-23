@@ -1,26 +1,25 @@
 "use client"
 
-import { LuFilter, LuHelpCircle, LuMoreVertical, LuInfo } from "react-icons/lu"
+import { useSegmentStoreContext } from "@/context"
+import { LuFilter, LuHelpCircle, LuMoreVertical } from "react-icons/lu"
 import { LockedSegmentsNotice } from "./LockedSegmentsNotice"
 import { SegmentTable } from "./tables"
 import { Notice } from "./Notice"
-import { useSegmentStoreContext } from "@/context"
 
 export function SegmentClientWrapper() {
   const { segmentData } = useSegmentStoreContext()
+  const { segments, lockReason, hasLockedSegments } = segmentData!
 
-  const isEmptySubmission = segmentData?.segments?.length === 0
-
-  const hasLocks = !(
-    segmentData?.lock?.skip.length === 0 &&
-    segmentData?.lock?.mute.length === 0 &&
-    segmentData?.lock?.full.length === 0
-  )
+  const isEmptySubmission = segments?.length === 0
 
   return (
     <>
       {/* Lock notices */}
-      <div className="my-4">{hasLocks ? <LockedSegmentsNotice /> : null}</div>
+      <div className="my-4">
+        {hasLockedSegments ? (
+          <LockedSegmentsNotice reason={lockReason!} />
+        ) : null}
+      </div>
       <div className="relative flex flex-col gap-y-2.5">
         {/* Filter stuff */}
         <div
@@ -49,7 +48,7 @@ export function SegmentClientWrapper() {
         </div>
         {/* Tables */}
         {!isEmptySubmission ? (
-          <SegmentTable segments={segmentData!.segments!} />
+          <SegmentTable segments={segments!} />
         ) : (
           <div className="mt-4">
             <Notice heading="No segments submitted" intent="info">

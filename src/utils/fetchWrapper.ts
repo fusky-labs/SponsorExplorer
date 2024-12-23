@@ -4,16 +4,21 @@ export const fetchWrapper = async <ReturnPromise = string>(
   url: string,
   init?: RequestInit
 ): Promise<[ReturnPromise, number]> => {
-  const _req = await fetch(url, init)
+  try {
+    const _req = await fetch(url, init)
 
-  const reqStatus = _req.status
-  const reqText = await _req.text() as ReturnPromise
+    const reqStatus = _req.status
+    const reqText = await _req.text()
 
-  console.debug("Request url:", url)
+    console.debug("Request url:", url)
 
-  if (isValidJSON(reqText as string)) {
-    return [JSON.parse(reqText as string), reqStatus]
+    if (isValidJSON(reqText)) {
+      return [JSON.parse(reqText as string), reqStatus]
+    }
+
+    return [reqText as ReturnPromise, reqStatus]
+  } catch (e) {
+    console.error("An error has occurred:", e)
+    throw e
   }
-
-  return [reqText, reqStatus]
 }

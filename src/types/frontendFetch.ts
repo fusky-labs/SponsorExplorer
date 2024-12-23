@@ -3,12 +3,14 @@ import type { Responses } from "@/utils/SponsorBlock.types"
 export interface VideoSegments {
   totalIterations: number
   submissionCount: number
+  hasLockedSegments: boolean
+  lockReason: string | null
+  lockedSegments: {
+    skip: Responses.LockCategories[] | null
+    mute: Responses.LockCategories[] | null
+    full: Responses.LockCategories[] | null
+  } | Record<string, never>
   segments: Responses.SearchSegments["segments"]
-  lock: {
-    skip: (Responses.LockCategories | never[]) & unknown[]
-    mute: (Responses.LockCategories | never[]) & unknown[]
-    full: (Responses.LockCategories | never[]) & unknown[]
-  }
 }
 
 /**

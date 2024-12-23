@@ -93,19 +93,54 @@ export async function GET(request: NextRequest) {
   // @ts-expect-error: Dates are too type-strict to sort UNIX dates
   const sortedSegments = _totalSegments.sort((a, b) => (new Date(a.timeSubmitted) - new Date(b.timeSubmitted)))
 
+  // Parse locked segments if any are available
   const lockedSegmentsFallback = (lockedSegments: Responses.LockCategories) => {
-    return typeof lockedSegments === "string" ? [] : lockedSkipSegments
+    return typeof lockedSegments === "string" ? null : lockedSkipSegments
   }
+
+  const _lockedSegments = {
+    skip: (lockedSegmentsFallback(lockedSkipSegments)),
+    mute: (lockedSegmentsFallback(lockedMuteSegments)),
+    full: (lockedSegmentsFallback(lockedFullSegments))
+  }
+
+  let lockReason: string | null = null
+  const _lockReasonSet = new Set<string>()
+
+  const hasLockedSegments = !(
+    _lockedSegments.skip === null &&
+    _lockedSegments.mute === null &&
+    _lockedSegments.full === null
+  )
+
+  const lockValues = Object.entries(_lockedSegments)
+    .map(([_, value]) => value)
+    .filter(Boolean) as Responses.LockCategories[]
+
+  if (hasLockedSegments) {
+    lockValues.forEach(({ reason }) => {
+      if (reason === null) return
+      _lockReasonSet.add(reason)
+    })
+    const reasonFiltered = Array.from(_lockReasonSet).filter(Boolean)
+
+    lockReason = reasonFiltered[0]
+  }
+
+  const lockedSegments = Object.fromEntries(
+    Object.entries(_lockedSegments).map(([key, value]) => {
+      if (!value) return []
+      return [key, value.categories]
+    })
+  )
 
   return NextResponse.json({
     totalIterations,
     submissionCount: segmentCount,
+    hasLockedSegments,
+    lockedSegments,
+    lockReason: lockReason ?? null,
     segments: sortedSegments,
-    lock: {
-      skip: lockedSegmentsFallback(lockedSkipSegments),
-      mute: lockedSegmentsFallback(lockedMuteSegments),
-      full: lockedSegmentsFallback(lockedFullSegments)
-    },
   }, {
     status: _status
   })
