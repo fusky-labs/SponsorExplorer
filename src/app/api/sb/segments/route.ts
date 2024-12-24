@@ -2,10 +2,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { type NextRequest, NextResponse } from "next/server"
 import { allSegments, padIterations, SponsorBlock } from "@/utils"
-import { Responses } from "@/utils/SponsorBlock.types"
+import { sb } from "@/utils/SponsorBlock.types"
 
 type SortByLiteral = "asc" | "desc"
-type SBSegment = Responses.SearchSegments['segments']
+type SBSegment = sb.Responses.SearchSegments['segments']
 
 export async function GET(request: NextRequest) {
   const urlParams = new URL(request.url).searchParams
@@ -94,7 +94,7 @@ export async function GET(request: NextRequest) {
   const sortedSegments = _totalSegments.sort((a, b) => (new Date(a.timeSubmitted) - new Date(b.timeSubmitted)))
 
   // Parse locked segments if any are available
-  const lockedSegmentsFallback = (lockedSegments: Responses.LockCategories) => {
+  const lockedSegmentsFallback = (lockedSegments: sb.Responses.LockCategories) => {
     return typeof lockedSegments === "string" ? null : lockedSkipSegments
   }
 
@@ -115,7 +115,7 @@ export async function GET(request: NextRequest) {
 
   const lockValues = Object.entries(_lockedSegments)
     .map(([_, value]) => value)
-    .filter(Boolean) as Responses.LockCategories[]
+    .filter(Boolean) as sb.Responses.LockCategories[]
 
   if (hasLockedSegments) {
     lockValues.forEach(({ reason }) => {

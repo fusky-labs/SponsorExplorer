@@ -13,7 +13,7 @@ export type Category =
 
 export type ActionType = "skip" | "full" | "mute" | "chapter"
 
-export namespace Props {
+export namespace sb.Props {
   export interface SkipAndSearchSegments {
     videoID: string
     categories?: Category[]
@@ -46,7 +46,7 @@ export namespace Props {
   }
 }
 
-export namespace Responses {
+export namespace sb.Responses {
   export type SkipSegments = Array<{
     segment: number[]
     UUID: string

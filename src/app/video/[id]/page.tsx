@@ -61,12 +61,9 @@ export default async function VideoPage(props: RouteParams) {
 
   const [videoInfo, [initialData]] = await Promise.all([
     fetchVideoData(params.id),
-    fetchWrapper<VideoSegments>(
-      `${urlBase}/api/sponsorblock/segments?id=${params.id}`,
-      {
-        priority: "high",
-      },
-    ),
+    fetchWrapper<VideoSegments>(`${urlBase}/api/sb/segments?id=${params.id}`, {
+      priority: "high",
+    }),
   ])
 
   return (

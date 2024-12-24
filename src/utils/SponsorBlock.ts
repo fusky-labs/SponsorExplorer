@@ -1,6 +1,6 @@
 import { fetchWrapper } from "./fetchWrapper"
 import { parseURLSearchParams } from "./parsers"
-import type { Category, Props, Responses } from "./SponsorBlock.types"
+import type { Category, sb } from "./SponsorBlock.types"
 
 const SB_API_BASE_URL = "https://sponsor.ajay.app/api"
 
@@ -9,8 +9,8 @@ const SB_API_BASE_URL = "https://sponsor.ajay.app/api"
  * 
  * @link https://wiki.sponsor.ajay.app/w/API_Docs#GET_/api/skipSegments
  */
-const skipSegments = async (props: Props.SkipAndSearchSegments) => {
-  return fetchWrapper<Responses.SkipSegments>(
+const skipSegments = async (props: sb.Props.SkipAndSearchSegments) => {
+  return fetchWrapper<sb.Responses.SkipSegments>(
     parseURLSearchParams<typeof props>(`${SB_API_BASE_URL}/skipSegments`, props)
   )
 }
@@ -25,8 +25,8 @@ const skipSegments = async (props: Props.SkipAndSearchSegments) => {
  * 
  * @link https://wiki.sponsor.ajay.app/w/API_Docs#GET_/api/searchSegments
  */
-const searchSegments = async (props: Props.SkipAndSearchSegments) => {
-  return fetchWrapper<Responses.SearchSegments>(
+const searchSegments = async (props: sb.Props.SkipAndSearchSegments) => {
+  return fetchWrapper<sb.Responses.SearchSegments>(
     parseURLSearchParams<typeof props>(`${SB_API_BASE_URL}/searchSegments`, props)
   )
 }
@@ -36,19 +36,19 @@ const searchSegments = async (props: Props.SkipAndSearchSegments) => {
  * 
  * @link https://wiki.sponsor.ajay.app/w/API_Docs#GET_/api/lockCategories
  */
-const lockCategories = async (props: Props.LockedSegments) => {
-  return fetchWrapper<Responses.LockCategories>(
+const lockCategories = async (props: sb.Props.LockedSegments) => {
+  return fetchWrapper<sb.Responses.LockCategories>(
     parseURLSearchParams<typeof props>(`${SB_API_BASE_URL}/lockCategories`, props)
   )
 }
 
-const userID = async (props: Props.UserID) => {
+const userID = async (props: sb.Props.UserID) => {
   return fetchWrapper(
     parseURLSearchParams<typeof props>(`${SB_API_BASE_URL}/userID`, props)
   )
 }
 
-const userInfo = async (props: Props.UserInfo) => {
+const userInfo = async (props: sb.Props.UserInfo) => {
   return fetchWrapper(
     parseURLSearchParams<typeof props>(`${SB_API_BASE_URL}/userInfo`, props)
   )
