@@ -28,20 +28,7 @@ interface PlaylistItemsParams {
 export type AllPartLiterals = "snippet" | "contentDetails" | "statistics" | "status" | "paidProductPlacementDetails"
 export type AllEndpointParams = Partial<StandardParams & VideoParams & ChannelParams & PlaylistItemsParams & SearchParams>
 
-interface VideoItems {
-  snippet: {
-    title: string
-    publishedAt: string
-    channelId: string
-    channelTitle: string
-    description: string
-  }
-  paidProductPlacementDetails: {
-    hasPaidProductPlacement: boolean
-  }
-}
-
-export interface YTVideoResponse {
+interface YTRootResponse<T> {
   etag: string
   nextPageToken: string
   prevPageToken: string
@@ -49,43 +36,44 @@ export interface YTVideoResponse {
     totalResults: number
     resultsPerPage: number
   }
-  items: VideoItems[]
+  items: T[]
 }
 
-export interface ChannelItems {
-  snippet: {
-    title: string
-    description: string
-    publishedAt: string
-    thumbnails: {
-      default: {
-        url: string
-      }
-      medium: {
-        url: string
-      }
-      high: {
-        url: string
-      }
+export namespace yt.Responses {
+  export type VideoList = YTRootResponse<{
+    snippet: {
+      title: string
+      publishedAt: string
+      channelId: string
+      channelTitle: string
+      description: string
     }
-  }
-  contentDetails: {
-    relatedPlaylists: {
-      uploads: string
-      watchHistory: string
-      watchLater: string
+    paidProductPlacementDetails: {
+      hasPaidProductPlacement: boolean
     }
-  }
-}
+  }>
 
-export interface YTChannelResponse {
-  kind: "youtube#channelListResponse"
-  etag: string
-  nextPageToken: string
-  prevPageToken: string
-  pageInfo: {
-    totalResults: number
-    resultsPerPage: number
-  }
-  items: ChannelItems[]
+  export type ChannelList = YTRootResponse<{
+    snippet: {
+      title: string
+      description: string
+      publishedAt: string
+      thumbnails: {
+        default: {
+          url: string
+        }
+        medium: {
+          url: string
+        }
+        high: {
+          url: string
+        }
+      }
+    }
+    contentDetails: {
+      relatedPlaylists: {
+        uploads: string
+      }
+    }
+  }>
 }

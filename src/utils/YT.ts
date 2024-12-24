@@ -1,5 +1,5 @@
 import { fetchWrapper } from "./fetchWrapper"
-import type { AllEndpointParams, YTChannelResponse, YTVideoResponse } from "./YT.types"
+import type { AllEndpointParams, yt } from "./YT.types"
 
 class APIKeyMissingError extends Error {
   constructor(message: string) {
@@ -51,7 +51,7 @@ const _ytFetchOptions = { cache: "force-cache" } satisfies RequestInit
 const fetchVideos = async (params?: AllEndpointParams) => {
   const endpoint = ytUrl.createEndpoint("/videos", { ...params })
 
-  return fetchWrapper<YTVideoResponse>(endpoint, _ytFetchOptions)
+  return fetchWrapper<yt.Responses.VideoList>(endpoint, _ytFetchOptions)
 }
 
 /**
@@ -60,7 +60,7 @@ const fetchVideos = async (params?: AllEndpointParams) => {
 const fetchChannels = async (params: AllEndpointParams) => {
   const endpoint = ytUrl.createEndpoint("/channel", { ...params })
 
-  return fetchWrapper<YTChannelResponse>(endpoint, _ytFetchOptions)
+  return fetchWrapper<yt.Responses.ChannelList>(endpoint, _ytFetchOptions)
 }
 
 /**
@@ -69,7 +69,7 @@ const fetchChannels = async (params: AllEndpointParams) => {
 const fetchPlaylistItems = async (params: AllEndpointParams) => {
   const endpoint = ytUrl.createEndpoint("/playlistItems", { ...params })
 
-  return fetchWrapper<YTChannelResponse>(endpoint, _ytFetchOptions)
+  return fetchWrapper<yt.Responses.ChannelList>(endpoint, _ytFetchOptions)
 }
 
 /**
@@ -78,7 +78,7 @@ const fetchPlaylistItems = async (params: AllEndpointParams) => {
 const fetchSearch = async (params: AllEndpointParams) => {
   const endpoint = ytUrl.createEndpoint("/search", { ...params })
 
-  return fetchWrapper<YTChannelResponse>(endpoint, _ytFetchOptions)
+  return fetchWrapper<yt.Responses.ChannelList>(endpoint, _ytFetchOptions)
 }
 
 const youtube = {

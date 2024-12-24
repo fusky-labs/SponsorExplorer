@@ -1,5 +1,5 @@
 import { youtube } from "@/utils/YT"
-import { YTChannelResponse } from "@/utils/YT.types";
+import { yt } from "@/utils/YT.types";
 import { type NextRequest, NextResponse } from "next/server"
 
 export async function GET(request: NextRequest) {
@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
 
   const channelId = urlParams.get("id")!
 
-  let fetchedData: [YTChannelResponse, number] | null = null;
+  let fetchedData: [yt.Responses.ChannelList, number] | null = null;
 
   // Check if the channel ID starts with "UC"
   if (!fetchedData && channelId.startsWith("UC")) {
