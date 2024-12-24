@@ -41,11 +41,13 @@ export default async function RootLayout({
           nonce={nonce!}
           src="https://cloud.umami.is/script.js"
         />
-        <VideoListPeekProvider>
-          <Navbar />
-          <div className="min-h-[calc(100dvh-5.75rem)]">{children}</div>
-        </VideoListPeekProvider>
-        <Footer />
+        <div className="contents">
+          <VideoListPeekProvider>
+            <Navbar />
+            <div className="min-h-[calc(100dvh-5.75rem)]">{children}</div>
+          </VideoListPeekProvider>
+          <Footer />
+        </div>
       </body>
     </html>
   )

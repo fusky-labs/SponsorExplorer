@@ -17,8 +17,8 @@ export const parseDateStr = <DT extends string | number | Date = string>(dateStr
 
   const readableDate = d
     .toLocaleString("en-US", format)
-    .replace(", ", " ")
-    .replace(/\//g, "-")
+  // .replace(", ", " ")
+  // .replace(/\//g, "-")
 
   return { readableDate, isoDate }
 }
@@ -63,7 +63,7 @@ export const formatTimecode = (
   const hours = Math.floor(time / 3600)
   const minutes = Math.floor((time % 3600) / 60)
   const seconds = Math.floor(time % 60)
-  let milliseconds = (time % 1).toFixed(msRoundFactor).substring(2)
+  const milliseconds = (time % 1).toFixed(msRoundFactor).substring(2)
 
   let timeString: string
 

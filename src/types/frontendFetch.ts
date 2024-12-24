@@ -23,12 +23,13 @@ export interface NativeVideoChapters {
 }
 
 export interface VideoInfoType {
-  videoState: "FOUND" | "NOT_FOUND"
+  state: "FOUND" | "NOT_FOUND"
+  hasSponsorDisclosure?: boolean
   video: {
     title: string
     publishedAt: string
     channelId: string
     channelTitle: string
   }
-  nativeChapters?: NativeVideoChapters[]
+  nativeChapters?: (NativeVideoChapters | never)[]
 }

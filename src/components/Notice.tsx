@@ -1,5 +1,5 @@
 import { cva, type VariantProps } from "class-variance-authority"
-import { PropsWithChildren } from "react"
+import { type PropsWithChildren, useId } from "react"
 import {
   LuInfo as InfoIcon,
   LuAlertTriangle as WarningIcon,
@@ -28,6 +28,9 @@ interface NoticeProps {
 export function Notice(
   props: PropsWithChildren<NoticeProps & VariantProps<typeof NoticeBox>>,
 ) {
+  const _id = useId()
+  const a11yHeadingId = `kui-notice-title-${_id}`
+
   const iconProps = {
     size: 20,
     className: "flex-shrink-0",
@@ -39,12 +42,16 @@ export function Notice(
       className={NoticeBox({
         intent: props.intent,
       })}
+      role="note"
+      aria-labelledby={a11yHeadingId}
     >
       {props.intent === "info" && <InfoIcon {...iconProps} />}
       {props.intent === "warn" && <WarningIcon {...iconProps} />}
       {props.intent === "alert" && <AlertIcon {...iconProps} />}
       <div>
-        <div className="font-semibold text-lg pb-0.5">{props.heading}</div>
+        <div className="font-semibold text-lg pb-0.5" id={a11yHeadingId}>
+          {props.heading}
+        </div>
         <span>{props.children}</span>
       </div>
     </div>

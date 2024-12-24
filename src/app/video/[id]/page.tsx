@@ -80,7 +80,7 @@ export default async function VideoPage(props: RouteParams) {
         <SegmentStoreProvider initialData={initialData}>
           <VideoInfo
             id={params.id}
-            videoState={videoInfo.videoState}
+            state={videoInfo.state}
             video={videoInfo.video}
           />
           <TabStateProvider>

@@ -7,6 +7,7 @@ export async function GET(request: NextRequest) {
   const urlParams = new URL(request.url).searchParams
 
   const videoID = urlParams.get("id")!
+
   const [videoData, status] = await youtube.videos({
     id: videoID,
     part: ["snippet", "paidProductPlacementDetails"],
@@ -21,8 +22,10 @@ export async function GET(request: NextRequest) {
     }, { status: 404 })
   }
 
-  const video = items[0].snippet
-  const hasSponsorDisclosure = items[0].paidProductPlacementDetails.hasPaidProductPlacement
+  const firstItem = items[0]
+
+  const video = firstItem.snippet
+  const hasSponsorDisclosure = firstItem.paidProductPlacementDetails.hasPaidProductPlacement
 
   // TODO use description to parse timestamps
   const videoDesc = video.description
@@ -32,13 +35,19 @@ export async function GET(request: NextRequest) {
   if (videoDesc) {
     const lines = videoDesc.split("\n")
 
-    // Chapter varies from "0:00 - Intro" to "0:00 Intro"
-    // or even "0:00 - 0:30 - Intro"
-    const chapterRegex = /(\d+:\d+)(?: - )?(\d+:\d+)? - (.+)/
+    const chapterRegex = /((\d\d:\d\d:\d\d)|(\d+:\d\d:\d\d)|(\d+:\d\d))(\s.*|)/
+
+    console.debug("==== Timestamp debug start ====")
 
     lines.forEach((line) => {
       const match = line.match(chapterRegex)
+
+      if (!match) return
+
+      console.log(match)
     })
+
+    console.debug("====  Timestamp debug end  ====")
   }
 
   return NextResponse.json({
@@ -46,7 +55,7 @@ export async function GET(request: NextRequest) {
     hasSponsorDisclosure,
     video: {
       title: video.title,
-      publishedAt: new Date(video.publishedAt).toUTCString(),
+      publishedAt: video.publishedAt,
       channelId: video.channelId,
       channelTitle: video.channelTitle,
     },
