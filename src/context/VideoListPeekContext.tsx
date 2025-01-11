@@ -1,17 +1,16 @@
 "use client"
 
-import { createContext, useContext, useEffect, useState } from "react"
+import { createContext, useContext, useState } from "react"
 import { noop } from "lodash-es"
 import { VideoInfoType } from "@/types"
+import type { MapUseStateSetters } from "./context.types"
 
 type VideoItem = Omit<VideoInfoType["video"], "channelId">
 
-interface VideoListPeekContextType {
+type VideoListPeekContextType = MapUseStateSetters<{
   videoList: VideoItem[]
   activeVideo: string | null
-  setVideoList: React.Dispatch<React.SetStateAction<VideoItem[]>>
-  setActiveVideo: React.Dispatch<React.SetStateAction<string | null>>
-}
+}>
 
 const VideoListPeekContext = createContext<VideoListPeekContextType>({
   videoList: [],

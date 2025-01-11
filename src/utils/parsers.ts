@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { useContext } from "react"
+
 /**
  * A simple function that pads an undefined array used for iterations of
  * a specific number
@@ -18,6 +22,38 @@ export const isValidJSON = (jsonString: string) => {
   }
 
   return true
+}
+
+/**
+ * For guarding any context providers, mostly used to show errors when
+ * `Context.Provider` is used but not utilized in JSX
+ */
+export function contextProviderGuard<T>(
+  contextHook: T,
+  contextHookCallee: () => T,
+  contextProvider: (...args: any[]) => React.JSX.Element,
+) {
+  if (!contextHook)
+    throw new Error(
+      `${contextHookCallee.name} must be used within ${contextProvider.name}.`,
+    )
+}
+
+////////////////////
+///    OTHERS
+////////////////////
+const unwrapArrayAsLiteral = (arr: string[]) => `[${arr.map((x) => `"${x}"`).toString()}]`
+
+export const parseURLSearchParams = <P extends object>(url: string, params?: P) => {
+  if (!params) return url
+
+  const urlParams = Object.entries(params).map(([k, v]) => {
+    // SponsorBlock-specific params
+    if (k === "actionTypes" || k === "categories") return [k, unwrapArrayAsLiteral(v)]
+    return [k, v]
+  })
+
+  return `${url}?${new URLSearchParams(urlParams)}`
 }
 
 type AllConstructors =
