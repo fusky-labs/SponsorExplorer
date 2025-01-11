@@ -20,20 +20,6 @@ export const isValidJSON = (jsonString: string) => {
   return true
 }
 
-const unwrapArrayAsLiteral = (arr: string[]) => `[${arr.map((x) => `"${x}"`).toString()}]`
-
-export const parseURLSearchParams = <P extends object>(url: string, params?: P) => {
-  if (!params) return url
-
-  const urlParams = Object.entries(params).map(([k, v]) => {
-    // SponsorBlock-specific params
-    if (k === "actionTypes" || k === "categories") return [k, unwrapArrayAsLiteral(v)]
-    return [k, v]
-  })
-
-  return `${url}?${new URLSearchParams(urlParams)}`
-}
-
 type AllConstructors =
   | StringConstructor
   | NumberConstructor

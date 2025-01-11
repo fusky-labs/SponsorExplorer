@@ -1,8 +1,21 @@
-import { fetchWrapper } from "./fetchWrapper"
-import { parseURLSearchParams } from "./parsers"
 import type { Category, sb } from "./SponsorBlock.types"
+import { fetchWrapper } from "./fetchWrapper"
+import { URLConstructorFactory } from "./URLFactory"
 
-const SB_API_BASE_URL = "https://sponsor.ajay.app/api"
+class SponsorBlockURLFactory extends URLConstructorFactory {
+  constructor() {
+    super("https://sponsor.ajay.app/api", ([k, v]) => {
+      if (k === "actionTypes" || k === "categories") return [k, this.unwrapArrayAsLiteral(v as string[])]
+      return [k, v]
+    })
+  }
+
+  private unwrapArrayAsLiteral(arr: string[]) {
+    return `[${arr.map((x) => `"${x}"`).toString()}]`
+  }
+}
+
+const sbUrl = new SponsorBlockURLFactory()
 
 /**
  * Get segments for a video.
@@ -10,9 +23,9 @@ const SB_API_BASE_URL = "https://sponsor.ajay.app/api"
  * @link https://wiki.sponsor.ajay.app/w/API_Docs#GET_/api/skipSegments
  */
 const skipSegments = async (props: sb.Props.SkipAndSearchSegments) => {
-  return fetchWrapper<sb.Responses.SkipSegments>(
-    parseURLSearchParams<typeof props>(`${SB_API_BASE_URL}/skipSegments`, props)
-  )
+  const endpoint = sbUrl.createEndpoint<typeof props>("/skipSegments", props)
+
+  return fetchWrapper<sb.Responses.SkipSegments>(endpoint)
 }
 
 /**
@@ -26,9 +39,9 @@ const skipSegments = async (props: sb.Props.SkipAndSearchSegments) => {
  * @link https://wiki.sponsor.ajay.app/w/API_Docs#GET_/api/searchSegments
  */
 const searchSegments = async (props: sb.Props.SkipAndSearchSegments) => {
-  return fetchWrapper<sb.Responses.SearchSegments>(
-    parseURLSearchParams<typeof props>(`${SB_API_BASE_URL}/searchSegments`, props)
-  )
+  const endpoint = sbUrl.createEndpoint<typeof props>("/searchSegments", props)
+
+  return fetchWrapper<sb.Responses.SearchSegments>(endpoint)
 }
 
 /**
@@ -37,21 +50,21 @@ const searchSegments = async (props: sb.Props.SkipAndSearchSegments) => {
  * @link https://wiki.sponsor.ajay.app/w/API_Docs#GET_/api/lockCategories
  */
 const lockCategories = async (props: sb.Props.LockedSegments) => {
-  return fetchWrapper<sb.Responses.LockCategories>(
-    parseURLSearchParams<typeof props>(`${SB_API_BASE_URL}/lockCategories`, props)
-  )
+  const endpoint = sbUrl.createEndpoint<typeof props>("/lockCategories", props)
+
+  return fetchWrapper<sb.Responses.LockCategories>(endpoint)
 }
 
 const userID = async (props: sb.Props.UserID) => {
-  return fetchWrapper(
-    parseURLSearchParams<typeof props>(`${SB_API_BASE_URL}/userID`, props)
-  )
+  const endpoint = sbUrl.createEndpoint<typeof props>("/userID", props)
+
+  return fetchWrapper(endpoint)
 }
 
 const userInfo = async (props: sb.Props.UserInfo) => {
-  return fetchWrapper(
-    parseURLSearchParams<typeof props>(`${SB_API_BASE_URL}/userInfo`, props)
-  )
+  const endpoint = sbUrl.createEndpoint<typeof props>("/userInfo", props)
+
+  return fetchWrapper(endpoint)
 }
 
 const SponsorBlock = {

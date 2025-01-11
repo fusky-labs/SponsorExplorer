@@ -1,4 +1,5 @@
 import { fetchWrapper } from "./fetchWrapper"
+import { URLConstructorFactory } from "./URLFactory"
 import type { AllEndpointParams, yt } from "./YT.types"
 
 class APIKeyMissingError extends Error {
@@ -8,40 +9,32 @@ class APIKeyMissingError extends Error {
   }
 }
 
-class YTURLConstructor {
-  private readonly YT_API_BASE_URL = "https://www.googleapis.com/youtube/v3"
-  private YT_API_KEY = process.env.YT_API_KEY as string
+class YTURLFactory extends URLConstructorFactory {
+  private readonly YT_API_KEY = process.env.YT_API_KEY as string
 
-  createEndpoint(route: `/${string}`, params: AllEndpointParams) {
-    const _params = new URLSearchParams()
+  constructor() {
+    super("https://www.googleapis.com/youtube/v3")
+  }
 
+  createEndpoint<EndpointParams extends object = Required<AllEndpointParams>>(route: string, params: EndpointParams) {
     if (!this.YT_API_KEY) {
-      throw new APIKeyMissingError("YouTube API key not set, check your environment variables or .env file")
+      throw new APIKeyMissingError("YouTube API key not set. Check your environment variables or .env file.");
     }
 
-    const { part } = params
+    // @ts-ignore
+    params.key = this.YT_API_KEY
 
-    // part params
-    if (!part) _params.append("part", "contentDetails")
-    if (part && typeof part === "string") _params.append("part", part)
-    if (part && Array.isArray(part)) _params.append("part", part.join(","))
+    // @ts-ignore
+    if (!params.part) {
+      // @ts-ignore
+      params.part = "contentDetails"
+    }
 
-    // append the rest
-    Object.entries(params).forEach(([k, v]) => {
-      if (k !== "part" && k !== "maxResults") {
-        _params.append(k, v.toString())
-      }
-    })
-
-    _params.append("key", this.YT_API_KEY)
-
-    const finalParams = `?${_params.toString()}`
-
-    return `${this.YT_API_BASE_URL}${route}${finalParams}`
+    return super.createEndpoint(route, params)
   }
 }
 
-const ytUrl = new YTURLConstructor()
+const ytUrl = new YTURLFactory()
 
 const _ytFetchOptions = { cache: "force-cache" } satisfies RequestInit
 
