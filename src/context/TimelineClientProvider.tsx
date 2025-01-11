@@ -31,10 +31,8 @@ export function TimelineClientProvider({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const [currentTime, setCurrentTime] =
-    useState<TimelineContextType["currentTime"]>(null)
-  const [playerState, setPlayerState] =
-    useState<TimelineContextType["playerState"]>("stopped")
+  const [currentTime, setCurrentTime] = useState<TimelineContextType["currentTime"]>(null)
+  const [playerState, setPlayerState] = useState<TimelineContextType["playerState"]>("stopped")
 
   return (
     <TimelineContext.Provider
