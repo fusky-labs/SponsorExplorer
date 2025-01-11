@@ -3,23 +3,19 @@
 import { createContext, useContext, useState } from "react"
 import { noop } from "lodash-es"
 import { contextProviderGuard } from "@/utils"
+import type { MapUseStateSetters } from "./context.types"
 
 type TimelinePlayState = "stopped" | "paused" | "buffering" | "playing"
 type SegmentBank = Array<Record<string, unknown> | never>
 
-interface TimelineContextType {
+type TimelineContextType = MapUseStateSetters<{
   // To be tracked by the YT iframe API
   playerState: TimelinePlayState
   currentTime: number | null
 
   /** Stores all the submitted segments, including chapters */
   segmentBank: SegmentBank
-
-  // setters
-  setPlayerState: React.Dispatch<React.SetStateAction<TimelinePlayState>>
-  setCurrentTime: React.Dispatch<React.SetStateAction<number | null>>
-  setSegmentBank: React.Dispatch<React.SetStateAction<SegmentBank>>
-}
+}>
 
 const TimelineContext = createContext<Partial<TimelineContextType>>({
   currentTime: 0,

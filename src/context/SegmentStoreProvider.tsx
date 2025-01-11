@@ -3,15 +3,13 @@
 import { VideoSegments } from "@/types"
 import { noop } from "lodash-es"
 import { createContext, useContext, useState } from "react"
+import type { MapUseStateSetters } from "./context.types"
 
-type _PartialVideoSegments = Partial<VideoSegments>
+type SegmentStoreContextType = MapUseStateSetters<{
+  segmentData: Partial<VideoSegments>
+}>
 
-interface SegmentStoreContextType {
-  segmentData: _PartialVideoSegments
-  setSegmentData: React.Dispatch<React.SetStateAction<_PartialVideoSegments>>
-}
-
-const INITIAL_DATA: _PartialVideoSegments = {
+const INITIAL_DATA: SegmentStoreContextType["segmentData"] = {
   submissionCount: 0,
   segments: [],
   lockReason: null,
@@ -41,7 +39,7 @@ export function SegmentStoreProvider({
   initialData,
 }: Readonly<{
   children: React.ReactNode
-  initialData: _PartialVideoSegments
+  initialData: SegmentStoreContextType["segmentData"]
 }>) {
   const [segmentData, setSegmentData] = useState(initialData)
 
