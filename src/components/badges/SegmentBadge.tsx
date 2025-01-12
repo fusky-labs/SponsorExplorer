@@ -5,6 +5,7 @@ import { Category } from "@/utils/SponsorBlock.types"
 interface SegmentBadgeProps {
   segments: Category
   chapterLabel?: string
+  layout?: "mobile" | "desktop"
 }
 
 export function SegmentBadge(props: SegmentBadgeProps) {
@@ -43,7 +44,12 @@ export function SegmentBadge(props: SegmentBadgeProps) {
   const _seg = segmentObj[props.segments]
 
   return (
-    <Badge className="whitespace-nowrap relative inline-flex items-center gap-x-1.5 rounded-2xl cursor-help">
+    <Badge
+      className={cn(
+        "whitespace-nowrap inline-flex items-center gap-x-1.5",
+        props.layout === "desktop" ? "relative rounded-2xl cursor-help" : "p-0",
+      )}
+    >
       <span
         className={cn(_seg.bg, "rounded-full size-3 flex-shrink-0 z-[1]")}
         aria-hidden
@@ -51,12 +57,14 @@ export function SegmentBadge(props: SegmentBadgeProps) {
       <span
         className={cn(
           "text-sm font-semibold z-[1]",
-          props.chapterLabel ? "underline decoration-dashed" : ""
+          props.chapterLabel ? "underline decoration-dashed" : "",
         )}
       >
         {props.chapterLabel ? props.chapterLabel : _seg.label}
       </span>
-      <div className={cn(_seg.bg, "z-0 absolute inset-0 opacity-25")} />
+      {props.layout === "desktop" ? (
+        <div className={cn(_seg.bg, "z-0 absolute inset-0 opacity-25")} />
+      ) : null}
     </Badge>
   )
 }

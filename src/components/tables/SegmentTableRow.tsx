@@ -8,13 +8,8 @@ import {
   LuXCircle,
 } from "react-icons/lu"
 import { cn, formatNumber, parseDateStr } from "@/utils"
-import { VideoSegments } from "@/types"
 import { LengthBadge } from "../badges/LengthBadge"
-
-type Segment = Omit<
-  VideoSegments,
-  "lock" | "submissionCount"
->["segments"][number]
+import type { Segment } from "./SegmentRow.types"
 
 interface SegmentTableRowProps extends Segment {}
 
@@ -30,7 +25,9 @@ export function SegmentTableRow(props: SegmentTableRowProps) {
       )}
     >
       <td>
-        <time dateTime={isoDate}>{readableDate}</time>
+        <time dateTime={isoDate} className="whitespace-nowrap">
+          {readableDate}
+        </time>
       </td>
       <td>
         <div className="inline-flex items-center gap-x-1">
@@ -62,6 +59,7 @@ export function SegmentTableRow(props: SegmentTableRowProps) {
         <SegmentBadge
           segments={props.category as Category}
           chapterLabel={props.description}
+          layout="desktop"
         />
       </td>
       <td>

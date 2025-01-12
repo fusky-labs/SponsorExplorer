@@ -41,7 +41,7 @@ export function YouTube(props: YouTubeProps) {
           )
 
           if (hasWidgetAPI) {
-            setTimeout(() => loadPlayer(), 80)
+            setTimeout(() => loadPlayer(), 110)
           }
         }
       })
