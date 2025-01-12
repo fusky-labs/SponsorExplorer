@@ -4,13 +4,9 @@ import { createContext, useContext, useState } from "react"
 import { noop } from "lodash-es"
 import { contextProviderGuard } from "@/utils"
 import type { MapUseStateSetters } from "./context.types"
-import type { VideoSegments } from "@/types"
+import type { SegmentBank, VideoSegments } from "@/types"
 
 type TimelinePlayState = "stopped" | "paused" | "buffering" | "playing"
-type SegmentBank = {
-  segments: VideoSegments["segments"]
-  totalCount: VideoSegments["submissionCount"]
-}
 
 type TimelineContext = MapUseStateSetters<{
   // To be tracked by the YT iframe API
@@ -23,7 +19,7 @@ type TimelineContext = MapUseStateSetters<{
 
 const INITIAL_SEGMENT_BANK_DATA: SegmentBank = {
   segments: [],
-  totalCount: 0,
+  submissionCount: 0,
 }
 
 const TimelineContext = createContext<Partial<TimelineContext>>({

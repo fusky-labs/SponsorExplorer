@@ -1,3 +1,5 @@
+import type { ViewStateContext } from "@/context"
+
 type DefaultSearchParams = { [key: string]: string | string[] | undefined }
 
 /**
@@ -13,3 +15,14 @@ export interface DefineRouteParams<Params extends object = Record<string, never>
   params: Promise<Params>
   searchParams: Promise<SearchParams>
 }
+
+
+// Routes from `pages`
+export type ChannelIdRouteParams = DefineRouteParams<
+  { cid: string },
+  Partial<{
+    filters: string
+    sort: string
+    view: ViewStateContext["view"]
+  }>
+>

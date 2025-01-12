@@ -1,17 +1,11 @@
-import type { DefineRouteParams } from "@/types"
+import type { ChannelIdRouteParams } from "@/types"
 import type { Metadata } from "next"
-import { ViewStateProvider } from "@/context"
+import { ViewStateProvider, type ViewStateContext } from "@/context"
+import { VideoItemContainer } from "@/components/videoItems"
 
-type RouteParams = DefineRouteParams<
-  { cid: string },
-  Partial<{
-    filters: string
-    sort: string
-    tab: "all" | "videos" | "shorts"
-  }>
->
-
-export async function generateMetadata(props: RouteParams): Promise<Metadata> {
+export async function generateMetadata(
+  props: ChannelIdRouteParams,
+): Promise<Metadata> {
   const params = await props.params
 
   return {
@@ -19,19 +13,17 @@ export async function generateMetadata(props: RouteParams): Promise<Metadata> {
   }
 }
 
-export default async function ChannelPage(props: RouteParams) {
+export default async function ChannelPage(props: ChannelIdRouteParams) {
   const searchParams = await props.searchParams
   const params = await props.params
 
   const queryFilters = searchParams.filters
   const querySorts = searchParams.sort
-  const queryTab = searchParams.tab
+  const queryView = searchParams.view
 
   return (
     <div>
-      <ViewStateProvider>
-        <h1>Channel ID: {params.cid}</h1>
-      </ViewStateProvider>
+      <VideoItemContainer queryView={queryView} />
     </div>
   )
 }

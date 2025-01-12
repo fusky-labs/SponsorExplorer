@@ -44,7 +44,7 @@ export default async function RootLayout({
         <div className="contents">
           <VideoListPeekProvider>
             <Navbar />
-            <div className="min-h-[calc(100dvh-5.75rem)]">{children}</div>
+            <div className="min-h-[calc(100dvh-13.85rem)]">{children}</div>
           </VideoListPeekProvider>
           <Footer />
         </div>

@@ -13,6 +13,11 @@ export interface VideoSegments {
   segments: sb.Responses.SearchSegments["segments"]
 }
 
+export interface SegmentBank {
+  submissionCount: number
+  segments: sb.Responses.SearchSegments["segments"]
+}
+
 /**
  * This is when the creator supplies chapters from their descriptions,
  * and can be appended with SponsorBlock chapters

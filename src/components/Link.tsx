@@ -23,19 +23,15 @@ export function _Link(
   >,
 ) {
   const hrefStartsWithHttp = props.href.startsWith("http")
+  const hrefExternal = hrefStartsWithHttp || props.explicitExternal
+
   return (
     <Link
       {...props}
       href={props.href}
       className={cn("underline hover:no-underline", props.className)}
-      target={
-        hrefStartsWithHttp || props.explicitExternal ? "_blank" : undefined
-      }
-      rel={
-        hrefStartsWithHttp || props.explicitExternal
-          ? "noopener noreferrer"
-          : undefined
-      }
+      target={hrefExternal ? "_blank" : undefined}
+      rel={hrefExternal ? "noopener noreferrer" : undefined}
     >
       {props.children}
     </Link>

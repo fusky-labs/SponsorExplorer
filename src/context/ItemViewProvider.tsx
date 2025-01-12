@@ -6,21 +6,23 @@ import type { MapUseStateSetters } from "./context.types"
 
 type ViewType = "list" | "grid" | "compact"
 
-type ViewStateContextType = MapUseStateSetters<{
-  view: ViewType | null
-}>
+export interface ViewStateContext {
+  view: ViewType
+}
+
+type ViewStateContextType = MapUseStateSetters<ViewStateContext>
 
 const ViewStateContext = createContext<ViewStateContextType>({
   view: "grid",
   setView: noop,
 })
 
-export const useViewStateContext = () => {
+export const useViewItemStateContext = () => {
   const context = useContext(ViewStateContext)
 
   if (!context) {
     throw new Error(
-      "useViewStateContext must be used within a ViewStateProvider",
+      "useViewItemStateContext must be used within a ViewStateProvider",
     )
   }
 
@@ -30,7 +32,7 @@ export const useViewStateContext = () => {
 export function ViewStateProvider({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const [view, setView] = useState<ViewStateContextType["view"]>(null)
+  const [view, setView] = useState<ViewStateContextType["view"]>("grid")
 
   return (
     <ViewStateContext.Provider value={{ view, setView }}>
