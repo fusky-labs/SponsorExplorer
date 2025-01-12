@@ -1,9 +1,9 @@
 "use client"
 
 import { Dialog, DialogPanel } from "@headlessui/react"
-import type { NavbarDialogTypes } from "../base/Navbar.types"
+import type { ModalDialogTypes } from "./Modal.types"
 
-interface NavbarSearchProps extends NavbarDialogTypes {}
+interface NavbarSearchProps extends ModalDialogTypes {}
 
 export function NavbarSearchModal(props: NavbarSearchProps) {
   return (
