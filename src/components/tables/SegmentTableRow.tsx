@@ -1,5 +1,5 @@
 import { Category } from "@/utils/SponsorBlock.types"
-import { Badge, SegmentBadge } from "../badges"
+import { SegmentBadge } from "../badges"
 import {
   LuEyeOff,
   LuLock,
@@ -43,7 +43,7 @@ export function SegmentTableRow(props: SegmentTableRowProps) {
       <td>
         <div className="inline-flex items-center gap-x-1">
           {props.actionType === "full" ? (
-            <span className="h-[0.115rem] w-4 bg-black" />
+            <span>—</span>
           ) : (
             <span>{formatNumber(props.views)}</span>
           )}

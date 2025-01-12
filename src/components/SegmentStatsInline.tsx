@@ -35,7 +35,9 @@ export function SegmentStatsInline(props: SegmentStatsInlineProps) {
         onClick={props.onDetailStatsShow}
         className={cn(
           "py-0.5 px-1.5 flex items-center gap-x-1.5  rounded-md",
-          !hasNoSubmissions ? "opacity-70" : "hover:bg-neutral-300",
+          !hasNoSubmissions
+            ? "opacity-70 cursor-not-allowed"
+            : "hover:bg-neutral-300",
         )}
         disabled={!hasNoSubmissions}
       >
