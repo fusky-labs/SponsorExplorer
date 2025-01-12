@@ -9,6 +9,7 @@ import Link from "next/link"
 import { Notice } from "../Notice"
 import { SegmentStatsInline } from "../SegmentStatsInline"
 import { DetailedStatsModal } from "../modals"
+import { LuGanttChartSquare } from "react-icons/lu"
 
 const YouTube = dynamic(() => import("../YouTube").then((c) => c.YouTube), {
   ssr: false,
@@ -71,6 +72,13 @@ export function VideoInfo(props: VideoInfoProps) {
             submissionCount={_submissionCount}
             onDetailStatsShow={toggleDetailsDialog}
           />
+          <Link
+            href={`/video/${props.id}/timeline`}
+            className="py-0.5 px-1.5 flex items-center gap-x-1.5 rounded-md hover:bg-neutral-300"
+          >
+            <LuGanttChartSquare size={17} />
+            <span>Timeline view</span>
+          </Link>
           {/* Bottom content */}
           <div className="flex-1 flex items-end mt-1.5">
             <Link href={`https://sb.ltn.fi/video/${props.id}`}>
