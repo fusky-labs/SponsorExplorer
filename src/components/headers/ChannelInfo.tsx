@@ -1,11 +1,8 @@
 "use client"
 
 import { _Link as Link } from "@/components/Link"
-import {
-  LuBarChartHorizontal,
-  LuBookmark,
-  LuExternalLink,
-} from "react-icons/lu"
+import { LuBookmark, LuExternalLink } from "react-icons/lu"
+import { SegmentStatsInline } from "../SegmentStatsInline"
 
 interface ChannelInfoProps {
   channelId: string
@@ -38,17 +35,7 @@ export function ChannelInfo(props: ChannelInfoProps) {
           </div>
         </div>
         {/* Segments submitted */}
-        <div className="flex items-center gap-x-1.5 mt-auto py-1 px-2.5 border border-neutral-400 rounded-md">
-          <span className="pr-0.5">
-            <strong>N</strong> segments submitted (<strong>12h 54m</strong>)
-          </span>
-          <div className="h-4 border-l-2 border-neutral-400" />
-          <button className="py-0.5 px-1.5 rounded-sm inline-flex items-center gap-x-1.5 hover:bg-neutral-300">
-            <LuBarChartHorizontal size={17} />
-            <span>View detailed stats</span>
-            <LuExternalLink size={14} />
-          </button>
-        </div>
+        <SegmentStatsInline />
       </div>
     </div>
   )
