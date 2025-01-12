@@ -9,14 +9,14 @@ type VideoItem = Omit<VideoInfoType["video"], "channelId">
 
 type VideoListPeekContextType = MapUseStateSetters<{
   videoList: VideoItem[]
-  activeVideo: string | null
+  activeVideoId: string | null
 }>
 
 const VideoListPeekContext = createContext<VideoListPeekContextType>({
   videoList: [],
-  activeVideo: "",
+  activeVideoId: null,
   setVideoList: noop,
-  setActiveVideo: noop,
+  setActiveVideoId: noop,
 })
 
 export const useVideoListPeekContext = () => {
@@ -36,12 +36,12 @@ export function VideoListPeekProvider({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const [videoList, setVideoList] = useState([] as VideoItem[])
-  const [activeVideo, setActiveVideo] = useState(null as string | null)
+  const [videoList, setVideoList] = useState<VideoListPeekContextType["videoList"]>([])
+  const [activeVideoId, setActiveVideoId] = useState<VideoListPeekContextType["activeVideoId"]>(null)
 
   return (
     <VideoListPeekContext.Provider
-      value={{ videoList, activeVideo, setActiveVideo, setVideoList }}
+      value={{ videoList, activeVideoId, setActiveVideoId, setVideoList }}
     >
       {children}
     </VideoListPeekContext.Provider>

@@ -4,11 +4,15 @@ import { createContext, useContext, useState } from "react"
 import { noop } from "lodash-es"
 import { contextProviderGuard } from "@/utils"
 import type { MapUseStateSetters } from "./context.types"
+import type { VideoSegments } from "@/types"
 
 type TimelinePlayState = "stopped" | "paused" | "buffering" | "playing"
-type SegmentBank = Array<Record<string, unknown> | never>
+type SegmentBank = {
+  segments: VideoSegments["segments"]
+  totalCount: VideoSegments["submissionCount"]
+}
 
-type TimelineContextType = MapUseStateSetters<{
+type TimelineContext = MapUseStateSetters<{
   // To be tracked by the YT iframe API
   playerState: TimelinePlayState
   currentTime: number | null
@@ -17,10 +21,15 @@ type TimelineContextType = MapUseStateSetters<{
   segmentBank: SegmentBank
 }>
 
-const TimelineContext = createContext<Partial<TimelineContextType>>({
+const INITIAL_SEGMENT_BANK_DATA: SegmentBank = {
+  segments: [],
+  totalCount: 0,
+}
+
+const TimelineContext = createContext<Partial<TimelineContext>>({
   currentTime: 0,
   playerState: "stopped",
-  segmentBank: [],
+  segmentBank: INITIAL_SEGMENT_BANK_DATA,
   setCurrentTime: noop,
   setPlayerState: noop,
   setSegmentBank: noop,
@@ -31,16 +40,19 @@ export function TimelineClientProvider({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const [currentTime, setCurrentTime] = useState<TimelineContextType["currentTime"]>(null)
-  const [playerState, setPlayerState] = useState<TimelineContextType["playerState"]>("stopped")
+  const [currentTime, setCurrentTime] = useState<TimelineContext["currentTime"]>(null)
+  const [playerState, setPlayerState] = useState<TimelineContext["playerState"]>("stopped")
+  const [segmentBank, setSegmentBank] = useState<TimelineContext["segmentBank"]>(INITIAL_SEGMENT_BANK_DATA)
 
   return (
     <TimelineContext.Provider
       value={{
         currentTime,
         playerState,
+        segmentBank,
         setCurrentTime,
         setPlayerState,
+        setSegmentBank,
       }}
     >
       {children}

@@ -7,7 +7,7 @@ import type { MapUseStateSetters } from "./context.types"
 type ViewType = "list" | "grid" | "compact"
 
 type ViewStateContextType = MapUseStateSetters<{
-  view: ViewType
+  view: ViewType | null
 }>
 
 const ViewStateContext = createContext<ViewStateContextType>({
@@ -30,7 +30,7 @@ export const useViewStateContext = () => {
 export function ViewStateProvider({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const [view, setView] = useState<ViewStateContextType["view"]>("grid")
+  const [view, setView] = useState<ViewStateContextType["view"]>(null)
 
   return (
     <ViewStateContext.Provider value={{ view, setView }}>
