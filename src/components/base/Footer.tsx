@@ -5,8 +5,8 @@ export function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="mt-4 dark:bg-neutral-900 border-t border-neutral-600">
-      <div className="px-6 py-7 mx-auto max-w-screen-2xl">
+    <div className="mt-4 dark:bg-neutral-900 border-t border-neutral-600">
+      <footer className="px-6 py-7 mx-auto max-w-screen-2xl">
         <article className="last:prose-p:mb-0 prose-p:mb-1.5">
           <p>
             <strong>SponsorExplorer</strong> is a rewrite of the{" "}
@@ -34,7 +34,7 @@ export function Footer() {
             <LuExternalLink size={17} className="ml-1" />
           </Link>
         </div>
-      </div>
-    </footer>
+      </footer>
+    </div>
   )
 }

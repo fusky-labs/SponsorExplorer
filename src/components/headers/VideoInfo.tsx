@@ -5,10 +5,11 @@ import { useSegmentStoreContext } from "@/context"
 import type { VideoInfoType } from "@/types"
 import { parseDateStr } from "@/utils"
 import dynamic from "next/dynamic"
-import Link from "next/link"
+import { _Link as Link } from "@/components/Link"
 import { Notice } from "../Notice"
 import { SegmentStatsInline } from "../SegmentStatsInline"
 import { DetailedStatsModal } from "../modals"
+import { LuExternalLink, LuGlasses } from "react-icons/lu"
 import { LuGanttChartSquare } from "react-icons/lu"
 
 const YouTube = dynamic(() => import("../YouTube").then((c) => c.YouTube), {
@@ -25,11 +26,21 @@ export function VideoInfo(props: VideoInfoProps) {
 
   const _submissionCount = segmentData.submissionCount ?? 0
 
-  const { isoDate, readableDate } = parseDateStr(props.video.publishedAt, {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  })
+  const { video } = props
+
+  let _isoDate
+  let _readableDate
+
+  if (video) {
+    const { isoDate, readableDate } = parseDateStr(video.publishedAt, {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    })
+
+    _isoDate = isoDate
+    _readableDate = readableDate
+  }
 
   const toggleDetailsDialog = () => setToggleDetailsModal(!detailsModal)
 
@@ -42,7 +53,7 @@ export function VideoInfo(props: VideoInfoProps) {
         {/* Video details */}
         <div className="flex-1 px-5 py-4 flex flex-col gap-y-3 prose-h1:text-2xl prose-h1:font-bold w-full">
           {/* Video title */}
-          {props.state === "FOUND" ? (
+          {video ? (
             <>
               <div className="space-y-1">
                 <span className="opacity-75">Segments for</span>
@@ -53,13 +64,14 @@ export function VideoInfo(props: VideoInfoProps) {
                   {"View channel segments for "}
                   <span translate="no">{props.video.channelTitle}</span>
                 </div>
-                <div
+                <Link
                   translate="no"
                   aria-labelledby="view-channel-segments-a11y"
+                  href={`/channel/${props.video.channelId}`}
                 >
                   {props.video.channelTitle}
-                </div>
-                <time dateTime={isoDate}>{readableDate}</time>
+                </Link>
+                <time dateTime={_isoDate}>{_readableDate}</time>
               </div>
             </>
           ) : (
@@ -70,6 +82,7 @@ export function VideoInfo(props: VideoInfoProps) {
           )}
           <SegmentStatsInline
             submissionCount={_submissionCount}
+            segments={segmentData.segments}
             onDetailStatsShow={toggleDetailsDialog}
           />
           <Link
@@ -80,11 +93,22 @@ export function VideoInfo(props: VideoInfoProps) {
             <span>Timeline view</span>
           </Link>
           {/* Bottom content */}
-          <div className="flex-1 flex items-end mt-1.5">
-            <Link href={`https://sb.ltn.fi/video/${props.id}`}>
-              View on <span translate="no">SBbrowser</span>
+          <div className="flex-1" />
+          <div className="flex items-center mt-auto gap-x-2">
+            <Link
+              href={`https://sb.ltn.fi/video/${props.id}`}
+              className="inline-flex gap-x-1.5 items-center"
+            >
+              <span>
+                View on <span translate="no">SBbrowser</span>
+              </span>
+              <LuExternalLink size={17} />
             </Link>
-            <button>View logs</button>
+            <div className="ml-1.5 h-4 border-l-2 border-neutral-400" />
+            <button className="inline-flex gap-x-1.5 items-center">
+              <LuGlasses size={17} />
+              <span>For nerds</span>
+            </button>
           </div>
         </div>
       </div>
