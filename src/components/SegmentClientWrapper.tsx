@@ -34,11 +34,10 @@ export function SegmentClientWrapper() {
             <button className="rounded-md px-2.5 py-1">Segments</button>
             <button className="rounded-md px-2.5 py-1">Chapters</button>
           </div>
-          <div className="flex-1 relative flex rounded-md border">
-            <div className="absolute left-2 inset-y-0 flex items-center">
-              <LuFilter size={19} />
-            </div>
-          </div>
+          <div id="filter-container" className="flex-1"></div>
+          <button>
+            <LuFilter size={19} />
+          </button>
           <button>
             <LuMoreVertical size={19} />
           </button>

@@ -1,18 +1,23 @@
+"use client"
+
 import { Category } from "@/utils/SponsorBlock.types"
 import { SegmentBadge } from "../badges"
 import {
+  LuCopy,
   LuEyeOff,
+  LuFilter,
   LuLock,
-  LuMoreVertical,
   LuTimerOff,
   LuXCircle,
 } from "react-icons/lu"
 import { cn, formatNumber, parseDateStr } from "@/utils"
 import { LengthBadge } from "../badges/LengthBadge"
 import type { Segment } from "./SegmentRow.types"
+import { SegmentRowDropdown } from "./SegmentRowDropdown"
 
 interface SegmentTableRowProps extends Segment {}
 
+// TODO: add filter on row hover
 export function SegmentTableRow(props: SegmentTableRowProps) {
   const { isoDate, readableDate } = parseDateStr(props.timeSubmitted)
 
@@ -37,13 +42,12 @@ export function SegmentTableRow(props: SegmentTableRowProps) {
           ) : null}
         </div>
       </td>
+
       <td>
         <div className="inline-flex items-center gap-x-1">
-          {props.actionType === "full" ? (
-            <span>—</span>
-          ) : (
-            <span>{formatNumber(props.views)}</span>
-          )}
+          <span>
+            {props.actionType === "full" ? "—" : formatNumber(props.views)}
+          </span>
           {props.shadowHidden ? (
             <LuEyeOff size={17} className="text-red-500" />
           ) : null}
@@ -55,15 +59,20 @@ export function SegmentTableRow(props: SegmentTableRowProps) {
           ) : null}
         </div>
       </td>
+
       <td>
-        <div className="flex items-center">
+        <div className="flex items-center gap-x-0.5">
           <SegmentBadge
             segments={props.category as Category}
             chapterLabel={props.description}
             layout="desktop"
           />
+          <button className="p-0.5">
+            <LuFilter size={19} />
+          </button>
         </div>
       </td>
+
       <td>
         <LengthBadge
           actionType={props.actionType}
@@ -71,13 +80,23 @@ export function SegmentTableRow(props: SegmentTableRowProps) {
           startTime={props.startTime}
         />
       </td>
-      <td>{props.userID.slice(0, 12)}</td>
+
       <td>
-        <div className="grid place-items-center">
-          <button>
-            <LuMoreVertical size={19} />
+        <div className="flex items-center gap-x-0.5 max-w-48">
+          <div className="truncate flex-1">
+            <span>{props.userID}</span>
+          </div>
+          <button className="p-0.5">
+            <LuFilter size={19} />
+          </button>
+          <button className="p-0.5">
+            <LuCopy size={19} />
           </button>
         </div>
+      </td>
+
+      <td>
+        <SegmentRowDropdown />
       </td>
     </tr>
   )
