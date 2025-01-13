@@ -24,11 +24,21 @@ export function VideoInfo(props: VideoInfoProps) {
 
   const _submissionCount = segmentData.submissionCount ?? 0
 
-  const { isoDate, readableDate } = parseDateStr(props.video.publishedAt, {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  })
+  const { video } = props
+
+  let _isoDate
+  let _readableDate
+
+  if (video) {
+    const { isoDate, readableDate } = parseDateStr(video.publishedAt, {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    })
+
+    _isoDate = isoDate
+    _readableDate = readableDate
+  }
 
   const toggleDetailsDialog = () => setToggleDetailsModal(!detailsModal)
 
@@ -41,7 +51,7 @@ export function VideoInfo(props: VideoInfoProps) {
         {/* Video details */}
         <div className="flex-1 px-5 py-4 flex flex-col gap-y-3 prose-h1:text-2xl prose-h1:font-bold w-full">
           {/* Video title */}
-          {props.state === "FOUND" ? (
+          {video ? (
             <>
               <div className="space-y-1">
                 <span className="opacity-75">Segments for</span>
@@ -58,7 +68,7 @@ export function VideoInfo(props: VideoInfoProps) {
                 >
                   {props.video.channelTitle}
                 </div>
-                <time dateTime={isoDate}>{readableDate}</time>
+                <time dateTime={_isoDate}>{_readableDate}</time>
               </div>
             </>
           ) : (
@@ -69,6 +79,7 @@ export function VideoInfo(props: VideoInfoProps) {
           )}
           <SegmentStatsInline
             submissionCount={_submissionCount}
+            segments={segmentData.segments}
             onDetailStatsShow={toggleDetailsDialog}
           />
           {/* Bottom content */}

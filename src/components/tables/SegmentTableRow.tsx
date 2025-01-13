@@ -56,20 +56,20 @@ export function SegmentTableRow(props: SegmentTableRowProps) {
         </div>
       </td>
       <td>
-        <SegmentBadge
-          segments={props.category as Category}
-          chapterLabel={props.description}
-          layout="desktop"
-        />
-      </td>
-      <td>
         <div className="flex items-center">
-          <LengthBadge
-            actionType={props.actionType}
-            endTime={props.endTime}
-            startTime={props.startTime}
+          <SegmentBadge
+            segments={props.category as Category}
+            chapterLabel={props.description}
+            layout="desktop"
           />
         </div>
+      </td>
+      <td>
+        <LengthBadge
+          actionType={props.actionType}
+          endTime={props.endTime}
+          startTime={props.startTime}
+        />
       </td>
       <td>{props.userID.slice(0, 12)}</td>
       <td>

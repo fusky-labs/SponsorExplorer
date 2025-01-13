@@ -1,7 +1,7 @@
 "use client"
 
 import type { SegmentBank } from "@/types"
-import { cn, pluralFormatter } from "@/utils"
+import { cn, formatTimecode, pluralFormatter } from "@/utils"
 import { LuBarChartHorizontal, LuExternalLink } from "react-icons/lu"
 
 interface SegmentStatsInlineProps extends Partial<SegmentBank> {
@@ -14,10 +14,18 @@ export function SegmentStatsInline(props: SegmentStatsInlineProps) {
 
   const hasNoSubmissions = _submissionCount !== 0
 
+  const accum = _segmentBank
+    .map((seg) => seg.endTime - seg.startTime)
+    .reduce((acc, prev) => acc + prev, 0)
+
+  const totalSegmentDuration = formatTimecode(accum, {
+    separator: "letters",
+  }).replace(/^0m\s/g, "")
+
   return (
     <div
       data-segment-stats-inline=""
-      className="flex flex-wrap items-center gap-x-2 py-1.5 px-2.5 border border-neutral-400 rounded-md"
+      className="flex flex-wrap items-center gap-x-1 py-1.5 px-2.5 border border-neutral-400 rounded-md"
     >
       <span>
         <span className="font-bold">{_submissionCount ?? 0}</span>
@@ -27,10 +35,10 @@ export function SegmentStatsInline(props: SegmentStatsInlineProps) {
       </span>
       {hasNoSubmissions ? (
         <span>
-          (<span className="font-bold">0s</span> of segments submitted)
+          (<strong>{totalSegmentDuration}</strong> of segment(s) accrued)
         </span>
       ) : null}
-      <div className="h-4 border-l-2 border-neutral-400" />
+      <div className="ml-1.5 h-4 border-l-2 border-neutral-400" />
       <button
         onClick={props.onDetailStatsShow}
         className={cn(
@@ -43,7 +51,6 @@ export function SegmentStatsInline(props: SegmentStatsInlineProps) {
       >
         <LuBarChartHorizontal size={17} />
         <span>View detailed stats</span>
-        <LuExternalLink size={14} />
       </button>
     </div>
   )
