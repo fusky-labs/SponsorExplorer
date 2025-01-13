@@ -1,10 +1,10 @@
 "use client"
 
 import { useId } from "react"
-import type { NavbarDialogTypes } from "../base/Navbar.types"
+import type { ModalDialogTypes } from "./Modal.types"
 import { Modal } from "./Modal"
 
-interface NavbarOptionsProps extends NavbarDialogTypes {}
+interface NavbarOptionsProps extends ModalDialogTypes {}
 
 function OptionItem(props: { label: string; description: string }) {
   const id = useId()

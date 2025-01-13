@@ -6,7 +6,7 @@ browsing [SponsorBlock][sb] segments and chapters!
 ![SponsorExplorer Segment View Example](https://github.com/kurojifusky/SponsorExplorer/assets/165645282/05b2ca27-c89a-4a00-830d-93a324882268)
 ![SponsorExplorer LTT Example](https://github.com/kurojifusky/SponsorExplorer/assets/165645282/32a03560-232a-48cd-8c47-49ceabfcbee7)
 
-## Features
+## Feature Roadmap
 
 - ✅ Display submitted segments
 - ✅ View submitted from username/UUID via [sb.ltn.fi][sbb-prod]
@@ -15,6 +15,8 @@ browsing [SponsorBlock][sb] segments and chapters!
 - 🚧 Watchlist for YT videos, playlist, as well as usernames/userIDs
 - 🚧 In-depth stats about submitted segments in videos, channels, and from usernames/userIDs
 - ✅ Browse segments on YouTube channels
+- 🚧 **[NEW!]** Timeline view of all submitted segments, including downvoted and shadowhidden
+  segments except hidden segments from duration change
 
 ## Inspiration
 

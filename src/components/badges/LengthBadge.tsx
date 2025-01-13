@@ -21,6 +21,8 @@ export function LengthBadge(props: LengthBadgeProps) {
     msRoundFactor: 3,
   } satisfies Parameters<typeof formatTimecode>[1]
 
+  const timeDiff = props.endTime - props.startTime
+
   return (
     <span className="whitespace-nowrap inline-flex items-center gap-x-1.5">
       <div>
@@ -31,16 +33,24 @@ export function LengthBadge(props: LengthBadgeProps) {
         {props.actionType === "chapter" ? <ChapterIcon size={19} /> : null}
       </div>
       {props.actionType === "full" ? (
-        <span className="text-sm">Full video label</span>
+        <span>Full video label</span>
       ) : (
         <div className="inline-flex gap-x-1 items-center">
-          <span className="text-sm">
-            {formatTimecode(props.startTime, timecodeOptions)}
-          </span>
-          <span className="inline-block h-[0.110rem] w-2.5 bg-black/50" />
-          <span className="text-sm">
-            {formatTimecode(props.endTime, timecodeOptions)}
-          </span>
+          <span>{formatTimecode(props.startTime, timecodeOptions)}</span>
+          {props.actionType !== "poi" ? (
+            <>
+              <span>{` – `}</span>
+              <span>{formatTimecode(props.endTime, timecodeOptions)}</span>
+              <span className="text-sm">
+                (
+                {formatTimecode(timeDiff, {
+                  includeMilliseconds: true,
+                  msRoundFactor: 2,
+                })}
+                )
+              </span>
+            </>
+          ) : null}
         </div>
       )}
     </span>

@@ -4,10 +4,8 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 
 import { Navbar, Footer } from "@/components/base"
-import { headers } from "next/headers"
-import Script from "next/script"
 import { cn } from "@/utils"
-import { VideoListPeekProvider } from "@/context"
+import { SegmentStoreProvider, VideoListPeekProvider } from "@/context"
 
 const inter = Inter({
   weight: ["400", "500", "600", "700"],
@@ -28,26 +26,18 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const nonce = (await headers()).get("x-nonce")
-
   return (
     <html lang="en" dir="ltr">
       <body
         className={cn(inter.className, "antialiased text-sm overflow-x-hidden")}
       >
-        <Script
-          id="umami"
-          async
-          nonce={nonce!}
-          src="https://cloud.umami.is/script.js"
-        />
-        <div className="contents">
+        <SegmentStoreProvider>
           <VideoListPeekProvider>
             <Navbar />
-            <div className="min-h-[calc(100dvh-5.75rem)]">{children}</div>
+            <main className="min-h-[calc(100dvh-13.85rem)]">{children}</main>
           </VideoListPeekProvider>
-          <Footer />
-        </div>
+        </SegmentStoreProvider>
+        <Footer />
       </body>
     </html>
   )

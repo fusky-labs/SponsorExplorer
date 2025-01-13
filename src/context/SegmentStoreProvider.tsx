@@ -36,10 +36,10 @@ export const useSegmentStoreContext = () => {
 
 export function SegmentStoreProvider({
   children,
-  initialData,
+  initialData = INITIAL_DATA,
 }: Readonly<{
   children: React.ReactNode
-  initialData: SegmentStoreContextType["segmentData"]
+  initialData?: SegmentStoreContextType["segmentData"]
 }>) {
   const [segmentData, setSegmentData] = useState(initialData)
 
