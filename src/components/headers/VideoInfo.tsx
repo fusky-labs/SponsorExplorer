@@ -9,8 +9,7 @@ import { _Link as Link } from "@/components/Link"
 import { Notice } from "../Notice"
 import { SegmentStatsInline } from "../SegmentStatsInline"
 import { DetailedStatsModal } from "../modals"
-import { LuExternalLink, LuGlasses } from "react-icons/lu"
-import { LuGanttChartSquare } from "react-icons/lu"
+import { LuExternalLink, LuGlasses, LuGanttChartSquare } from "react-icons/lu"
 
 const YouTube = dynamic(() => import("../YouTube").then((c) => c.YouTube), {
   ssr: false,
