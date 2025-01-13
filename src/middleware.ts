@@ -17,9 +17,12 @@ export function middleware(request: NextRequest) {
   headers.set("Content-Security-Policy", parsedCsp)
   headers.set("x-nonce", nonce)
 
-  const { protocol, host } = request.nextUrl
+  const { protocol, host, searchParams } = request.nextUrl
 
+  // Some headers for other workarounds following the use of routes
+  // requiring to be async and need to be used with `(await headers()).get("x-url-*")`
   headers.set("x-url-origin", `${protocol}//${host}`)
+  headers.set("x-url-params", searchParams.toString())
 
   const res = NextResponse.next({
     request: {
