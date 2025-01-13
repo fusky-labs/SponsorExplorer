@@ -1,5 +1,6 @@
 "use client"
 
+import { usePathname } from "next/navigation"
 import { useEffect } from "react"
 
 interface YouTubeProps {
@@ -8,6 +9,8 @@ interface YouTubeProps {
 }
 
 export function YouTube(props: YouTubeProps) {
+  const pathname = usePathname()
+
   useEffect(() => {
     const loadPlayer = () => {
       new YT.Player("player", {
@@ -18,6 +21,7 @@ export function YouTube(props: YouTubeProps) {
         playerVars: {
           rel: 0,
           enablejsapi: 1,
+          modestbranding: 1,
         },
         events: {
           onReady: () => {
@@ -28,7 +32,7 @@ export function YouTube(props: YouTubeProps) {
     }
 
     setTimeout(() => {
-      if (window.YT) return
+      if (window.YT) return loadPlayer()
 
       // Listen for DOM mutations
       // So that the player and it's event listeners will be available from any connection speed
@@ -41,7 +45,12 @@ export function YouTube(props: YouTubeProps) {
           )
 
           if (hasWidgetAPI) {
-            setTimeout(() => loadPlayer(), 110)
+            const checkYT = setInterval(() => {
+              if (window.YT && window.YT.Player) {
+                clearInterval(checkYT)
+                loadPlayer()
+              }
+            }, 100)
           }
         }
       })
@@ -66,7 +75,7 @@ export function YouTube(props: YouTubeProps) {
       }, 1000 * 10)
       return
     }, 50)
-  }, [props.id])
+  }, [props.id, pathname])
 
   return <div id="player" />
 }
