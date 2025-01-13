@@ -5,10 +5,11 @@ import { useSegmentStoreContext } from "@/context"
 import type { VideoInfoType } from "@/types"
 import { parseDateStr } from "@/utils"
 import dynamic from "next/dynamic"
-import Link from "next/link"
+import { _Link as Link } from "@/components/Link"
 import { Notice } from "../Notice"
 import { SegmentStatsInline } from "../SegmentStatsInline"
 import { DetailedStatsModal } from "../modals"
+import { LuExternalLink, LuGlasses } from "react-icons/lu"
 
 const YouTube = dynamic(() => import("../YouTube").then((c) => c.YouTube), {
   ssr: false,
@@ -62,12 +63,13 @@ export function VideoInfo(props: VideoInfoProps) {
                   {"View channel segments for "}
                   <span translate="no">{props.video.channelTitle}</span>
                 </div>
-                <div
+                <Link
                   translate="no"
                   aria-labelledby="view-channel-segments-a11y"
+                  href={`/channel/${props.video.channelId}`}
                 >
                   {props.video.channelTitle}
-                </div>
+                </Link>
                 <time dateTime={_isoDate}>{_readableDate}</time>
               </div>
             </>
@@ -83,11 +85,22 @@ export function VideoInfo(props: VideoInfoProps) {
             onDetailStatsShow={toggleDetailsDialog}
           />
           {/* Bottom content */}
-          <div className="flex-1 flex items-end mt-1.5">
-            <Link href={`https://sb.ltn.fi/video/${props.id}`}>
-              View on <span translate="no">SBbrowser</span>
+          <div className="flex-1" />
+          <div className="flex items-center mt-auto gap-x-2">
+            <Link
+              href={`https://sb.ltn.fi/video/${props.id}`}
+              className="inline-flex gap-x-1.5 items-center"
+            >
+              <span>
+                View on <span translate="no">SBbrowser</span>
+              </span>
+              <LuExternalLink size={17} />
             </Link>
-            <button>View logs</button>
+            <div className="ml-1.5 h-4 border-l-2 border-neutral-400" />
+            <button className="inline-flex gap-x-1.5 items-center">
+              <LuGlasses size={17} />
+              <span>For nerds</span>
+            </button>
           </div>
         </div>
       </div>
