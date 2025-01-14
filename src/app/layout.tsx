@@ -5,7 +5,7 @@ import { Inter } from "next/font/google"
 
 import { Navbar, Footer } from "@/components/base"
 import { cn } from "@/utils"
-import { SegmentStoreProvider, VideoListPeekProvider } from "@/context"
+import { VideoListPeekProvider } from "@/context"
 
 const inter = Inter({
   weight: ["400", "500", "600", "700"],
@@ -29,14 +29,15 @@ export default async function RootLayout({
   return (
     <html lang="en" dir="ltr">
       <body
-        className={cn(inter.className, "antialiased text-sm overflow-x-hidden")}
+        className={cn(
+          inter.className,
+          "antialiased text-sm overflow-x-hidden prose-headings:font-bold",
+        )}
       >
-        <SegmentStoreProvider>
-          <VideoListPeekProvider>
-            <Navbar />
-            <main className="min-h-[calc(100dvh-13.85rem)]">{children}</main>
-          </VideoListPeekProvider>
-        </SegmentStoreProvider>
+        <VideoListPeekProvider>
+          <Navbar />
+          <main className="min-h-[calc(100dvh-13.85rem)]">{children}</main>
+        </VideoListPeekProvider>
         <Footer />
       </body>
     </html>

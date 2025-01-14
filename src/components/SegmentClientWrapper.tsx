@@ -1,15 +1,14 @@
 "use client"
 
-import { useSegmentStoreContext } from "@/context"
-
+import { useVideoInfoContext } from "@/context"
 import { LockedSegmentsNotice } from "./LockedSegmentsNotice"
 import { SegmentTable } from "./tables"
 import { Notice } from "./Notice"
 import { SegmentFilterBar } from "./FilterBar"
-import { LuMoreVertical, LuPlay, LuRefreshCw, LuRotateCw } from "react-icons/lu"
+import { LuMoreVertical, LuPlay, LuRefreshCw } from "react-icons/lu"
 
 export function SegmentClientWrapper() {
-  const { segmentData } = useSegmentStoreContext()
+  const { segmentData } = useVideoInfoContext()
   const { segments, lockReason, hasLockedSegments } = segmentData!
 
   const isEmptySubmission = segments?.length === 0

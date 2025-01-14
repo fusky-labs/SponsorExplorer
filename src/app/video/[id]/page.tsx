@@ -1,7 +1,7 @@
 import { VideoInfo } from "@/components/headers"
 import { SegmentClientWrapper } from "@/components/SegmentClientWrapper"
 import { VideoListSidebar } from "@/components/VideoListSidebar"
-import { SegmentStoreProvider, TabStateProvider } from "@/context"
+import { VideoInfoProvider, TabStateProvider } from "@/context"
 import type { DefineRouteParams, VideoInfoType, VideoSegments } from "@/types"
 import { fetchWrapper } from "@/utils/fetchWrapper"
 import type { Metadata } from "next"
@@ -74,16 +74,15 @@ export default async function VideoPage(props: RouteParams) {
         </div>
       ) : null}
       <div className="mx-auto px-6 max-w-screen-2xl w-full">
-        <SegmentStoreProvider initialData={initialData}>
-          <VideoInfo
-            id={params.id}
-            state={videoInfo.state}
-            video={videoInfo.video}
-          />
+        <VideoInfoProvider
+          videoData={{ ...videoInfo, id: params.id }}
+          initialSegmentData={initialData}
+        >
+          <VideoInfo />
           <TabStateProvider>
             <SegmentClientWrapper />
           </TabStateProvider>
-        </SegmentStoreProvider>
+        </VideoInfoProvider>
       </div>
     </div>
   )
