@@ -25,7 +25,7 @@ async function fetchVideoData(id: string) {
   const [fetchVideoInfo] = await fetchWrapper<VideoInfoType>(
     `${urlBase}/api/yt/video?id=${id}&min=1`,
     {
-      cache: "no-store",
+      cache: "force-cache",
     },
   )
 

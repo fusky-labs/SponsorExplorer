@@ -57,6 +57,10 @@ export function NavbarOptionsModal(props: NavbarOptionsProps) {
               description="Disabling this will prevent the player from loading the video and will only show the thumbnail"
             />
             <OptionItem
+              label="Use direct Iframe embed"
+              description="Enabling this option won't mount the embed client-side"
+            />
+            <OptionItem
               label="Expose keyboard controls"
               description="Enable keyboard shortcuts as you would in regular YouTube"
             />

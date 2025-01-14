@@ -9,7 +9,8 @@ import { _Link as Link } from "@/components/Link"
 import { Notice } from "../Notice"
 import { SegmentStatsInline } from "../SegmentStatsInline"
 import { DetailedStatsModal } from "../modals"
-import { LuExternalLink, LuGlasses } from "react-icons/lu"
+import { LuExternalLink, LuGlasses, LuLink2 } from "react-icons/lu"
+import { Separator } from "../Separator"
 
 const YouTube = dynamic(() => import("../YouTube").then((c) => c.YouTube), {
   ssr: false,
@@ -87,6 +88,16 @@ export function VideoInfo(props: VideoInfoProps) {
           {/* Bottom content */}
           <div className="flex-1" />
           <div className="flex items-center mt-auto gap-x-2">
+            <button className="inline-flex gap-x-1.5 items-center">
+              <LuLink2 size={17} />
+              <span>Copy link</span>
+            </button>
+            <Separator />
+            <button className="inline-flex gap-x-1.5 items-center">
+              <LuGlasses size={17} />
+              <span>For nerds</span>
+            </button>
+            <Separator />
             <Link
               href={`https://sb.ltn.fi/video/${props.id}`}
               className="inline-flex gap-x-1.5 items-center"
@@ -96,11 +107,6 @@ export function VideoInfo(props: VideoInfoProps) {
               </span>
               <LuExternalLink size={17} />
             </Link>
-            <div className="ml-1.5 h-4 border-l-2 border-neutral-400" />
-            <button className="inline-flex gap-x-1.5 items-center">
-              <LuGlasses size={17} />
-              <span>For nerds</span>
-            </button>
           </div>
         </div>
       </div>
