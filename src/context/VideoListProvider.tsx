@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState } from "react"
 import { noop } from "lodash-es"
-import { VideoInfoType } from "@/types"
+import type { VideoInfoType } from "@/types"
 import type { MapUseStateSetters } from "./context.types"
 
 type VideoItem = Omit<VideoInfoType["video"], "channelId">
@@ -24,20 +24,23 @@ export const useVideoListPeekContext = () => {
 
   if (!context) {
     throw new Error(
-      "useVideoListPeekContext must be used within a VideoListPeekProvider",
+      "useVideoListPeekContext must be used within a VideoListProvider",
     )
   }
 
   return context
 }
 
-export function VideoListPeekProvider({
+export function VideoListProvider({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const [videoList, setVideoList] = useState<VideoListPeekContextType["videoList"]>([])
-  const [activeVideoId, setActiveVideoId] = useState<VideoListPeekContextType["activeVideoId"]>(null)
+  const [videoList, setVideoList] = useState<
+    VideoListPeekContextType["videoList"]
+  >([])
+  const [activeVideoId, setActiveVideoId] =
+    useState<VideoListPeekContextType["activeVideoId"]>(null)
 
   return (
     <VideoListPeekContext.Provider

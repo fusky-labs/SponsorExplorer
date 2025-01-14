@@ -1,9 +1,8 @@
 "use client"
 
-import dynamic from "next/dynamic"
 import { useState, useEffect, useRef } from "react"
-import { Category } from "@/utils/SponsorBlock.types"
-import { SegmentBadge } from "../badges"
+import type { Category } from "@/utils/SponsorBlock.types"
+import { SegmentBadge } from "../Badges"
 import {
   LuCopy,
   LuEyeOff,
@@ -14,7 +13,7 @@ import {
 } from "react-icons/lu"
 import { cn, formatNumber, parseDateStr } from "@/utils"
 import { sbCategoryMap } from "@/utils/constants"
-import { LengthBadge } from "../badges/LengthBadge"
+import { LengthBadge } from "../Badges/LengthBadge"
 import type { Segment } from "./SegmentRow.types"
 import { SegmentRowDropdown } from "./SegmentRowDropdown"
 

@@ -2,7 +2,7 @@
 
 import { useVideoInfoContext } from "@/context"
 import { LockedSegmentsNotice } from "./LockedSegmentsNotice"
-import { SegmentTable } from "./tables"
+import { SegmentTable } from "./Tables"
 import { Notice } from "./Notice"
 import { SegmentFilterBar } from "./FilterBar"
 import { LuMoreVertical, LuPlay, LuRefreshCw } from "react-icons/lu"

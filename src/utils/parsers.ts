@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { useContext } from "react"
-
 /**
  * A simple function that pads an undefined array used for iterations of
  * a specific number

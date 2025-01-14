@@ -4,7 +4,7 @@ import { createContext, useContext, useState } from "react"
 import { noop } from "lodash-es"
 import { contextProviderGuard } from "@/utils"
 import type { MapUseStateSetters } from "./context.types"
-import type { SegmentBank, VideoSegments } from "@/types"
+import type { SegmentBank } from "@/types"
 
 type TimelinePlayState = "stopped" | "paused" | "buffering" | "playing"
 

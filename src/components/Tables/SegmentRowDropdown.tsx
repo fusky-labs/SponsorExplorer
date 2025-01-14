@@ -8,8 +8,8 @@ import {
   MenuItems,
   MenuSection,
 } from "@headlessui/react"
-import { IconType } from "react-icons"
-import { LuCopy, LuMoreVertical, LuScan, LuScanLine } from "react-icons/lu"
+import type { IconType } from "react-icons"
+import { LuCopy, LuMoreVertical, LuScanLine } from "react-icons/lu"
 
 function TmpButtonItem(props: { text: string; icon?: IconType }) {
   const Icon = props.icon!

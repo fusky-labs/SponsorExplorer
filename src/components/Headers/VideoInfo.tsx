@@ -8,7 +8,7 @@ import { _Link as Link } from "@/components/Link"
 import { Notice } from "../Notice"
 import { SegmentStatsInline } from "../SegmentStatsInline"
 
-import { DetailedSegmentStatsModal } from "../modals"
+import { DetailedSegmentStatsModal } from "../Modals"
 import { LuExternalLink, LuGlasses, LuLink2 } from "react-icons/lu"
 import { Separator } from "../Separator"
 

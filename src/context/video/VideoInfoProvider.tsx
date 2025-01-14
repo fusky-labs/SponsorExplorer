@@ -1,6 +1,6 @@
 "use client"
 
-import { VideoInfoType, VideoSegments } from "@/types"
+import type { VideoInfoType, VideoSegments } from "@/types"
 import { noop } from "lodash-es"
 import { createContext, useContext, useState } from "react"
 import type { MapUseStateSetters } from "../context.types"
@@ -42,6 +42,7 @@ const VideoInfoContext = createContext<VideoInfoContextType>({
 })
 
 const validVideoPathOnly = () => {
+  /* eslint-disable-next-line react-hooks/rules-of-hooks */
   const pathname = usePathname()
 
   if (!pathname.startsWith("/video/")) {
@@ -51,7 +52,6 @@ const validVideoPathOnly = () => {
 
 export const useVideoInfoContext = () => {
   const context = useContext(VideoInfoContext)
-  const pathname = usePathname()
 
   if (!context) {
     throw new Error("useVideoInfoContext must be used within a VideoInfoProvider")

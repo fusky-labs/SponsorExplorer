@@ -3,9 +3,9 @@ import "./globals.css"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 
-import { Navbar, Footer } from "@/components/base"
+import { Navbar, Footer } from "@/components/Base"
 import { cn } from "@/utils"
-import { VideoListPeekProvider } from "@/context"
+import { VideoListProvider } from "@/context"
 
 const inter = Inter({
   weight: ["400", "500", "600", "700"],
@@ -34,10 +34,10 @@ export default async function RootLayout({
           "antialiased text-sm overflow-x-hidden prose-headings:font-bold",
         )}
       >
-        <VideoListPeekProvider>
+        <VideoListProvider>
           <Navbar />
           <main className="min-h-[calc(100dvh-13.85rem)]">{children}</main>
-        </VideoListPeekProvider>
+        </VideoListProvider>
         <Footer />
       </body>
     </html>

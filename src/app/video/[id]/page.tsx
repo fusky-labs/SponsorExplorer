@@ -1,6 +1,6 @@
-import { VideoInfo } from "@/components/headers"
+import { VideoInfo } from "@/components/Headers"
 import { SegmentClientWrapper } from "@/components/SegmentClientWrapper"
-import { VideoListSidebar } from "@/components/VideoListSidebar"
+import { VideoListSidebar } from "@/components/Sidebar"
 import { VideoInfoProvider, TabStateProvider } from "@/context"
 import type { DefineRouteParams, VideoInfoType, VideoSegments } from "@/types"
 import { fetchWrapper } from "@/utils/fetchWrapper"

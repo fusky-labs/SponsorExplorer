@@ -1,12 +1,6 @@
 "use client"
 
-import {
-  LuChevronDown,
-  LuFilter,
-  LuHelpCircle,
-  LuMoreVertical,
-  LuRotateCw,
-} from "react-icons/lu"
+import { LuChevronDown, LuFilter } from "react-icons/lu"
 
 export function SegmentFilterBar() {
   return (

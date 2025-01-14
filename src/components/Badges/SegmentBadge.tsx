@@ -1,6 +1,6 @@
 import { cn } from "@/utils"
 import { Badge } from "./Badge"
-import { Category } from "@/utils/SponsorBlock.types"
+import type { Category } from "@/utils/SponsorBlock.types"
 import { sbCategoryMap } from "@/utils/constants"
 
 interface SegmentBadgeProps {

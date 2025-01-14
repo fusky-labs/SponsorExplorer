@@ -1,5 +1,4 @@
 import { formatNumber, parseDateStr } from "@/utils"
-import type { Segment } from "./SegmentRow.types"
 import {
   LuFastForward as SkipIcon,
   LuVolumeX as MuteIcon,
@@ -8,8 +7,9 @@ import {
   LuVideo as FullIcon,
   LuLock,
 } from "react-icons/lu"
-import { SegmentBadge } from "../badges"
-import { Category } from "@/utils/SponsorBlock.types"
+import { SegmentBadge } from "../Badges"
+import type { Category } from "@/utils/SponsorBlock.types"
+import type { Segment } from "./SegmentRow.types"
 
 interface SegmentRowMobileProps extends Segment {}
 
