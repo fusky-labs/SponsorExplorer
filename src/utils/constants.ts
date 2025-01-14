@@ -1,4 +1,4 @@
-export const sbCategory: Record<string, { bg: string, label: string }> = {
+export const sbCategoryMap: Record<string, { bg: string, label: string }> = {
   sponsor: {
     bg: "bg-sb-sponsor",
     label: "Sponsor",

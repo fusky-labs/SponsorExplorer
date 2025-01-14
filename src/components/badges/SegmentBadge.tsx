@@ -1,7 +1,7 @@
 import { cn } from "@/utils"
 import { Badge } from "./Badge"
 import { Category } from "@/utils/SponsorBlock.types"
-import { sbCategory } from "@/constants"
+import { sbCategoryMap } from "@/utils/constants"
 
 interface SegmentBadgeProps {
   segments: Category
@@ -10,7 +10,7 @@ interface SegmentBadgeProps {
 }
 
 export function SegmentBadge(props: SegmentBadgeProps) {
-  const _seg = sbCategory[props.segments]
+  const segmentMap = sbCategoryMap[props.segments]
 
   return (
     <Badge
@@ -20,7 +20,7 @@ export function SegmentBadge(props: SegmentBadgeProps) {
       )}
     >
       <span
-        className={cn(_seg.bg, "rounded-full size-3 flex-shrink-0 z-[1]")}
+        className={cn(segmentMap.bg, "rounded-full size-3 flex-shrink-0 z-[1]")}
         aria-hidden
       />
       <span
@@ -29,10 +29,10 @@ export function SegmentBadge(props: SegmentBadgeProps) {
           props.chapterLabel ? "underline decoration-dashed" : "",
         )}
       >
-        {props.chapterLabel ? props.chapterLabel : _seg.label}
+        {props.chapterLabel ? props.chapterLabel : segmentMap.label}
       </span>
       {props.layout === "desktop" ? (
-        <div className={cn(_seg.bg, "z-0 absolute inset-0 opacity-25")} />
+        <div className={cn(segmentMap.bg, "z-0 absolute inset-0 opacity-25")} />
       ) : null}
     </Badge>
   )

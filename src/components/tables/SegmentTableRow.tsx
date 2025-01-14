@@ -13,7 +13,7 @@ import {
   LuXCircle,
 } from "react-icons/lu"
 import { cn, formatNumber, parseDateStr } from "@/utils"
-import { sbCategory } from "@/constants"
+import { sbCategoryMap } from "@/utils/constants"
 import { LengthBadge } from "../badges/LengthBadge"
 import type { Segment } from "./SegmentRow.types"
 import { SegmentRowDropdown } from "./SegmentRowDropdown"
@@ -96,7 +96,7 @@ export function SegmentTableRow(props: SegmentTableRowProps) {
           <div className={isHovering ? "contents" : "invisible"}>
             <button
               className="p-0.5"
-              title={`Filter out the ${sbCategory[props.category].label} category (Alt+Click to negate)`}
+              title={`Filter out the ${sbCategoryMap[props.category].label} category (Alt+Click to negate)`}
             >
               <LuFilter size={19} />
             </button>

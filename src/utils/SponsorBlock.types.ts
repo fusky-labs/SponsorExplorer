@@ -50,7 +50,7 @@ export namespace sb.Responses {
   export type SkipSegments = Array<{
     segment: number[]
     UUID: string
-    category: string,
+    category: Category,
     videoDuration: number
     actionType: string,
     locked: number,
@@ -66,7 +66,7 @@ export namespace sb.Responses {
       timeSubmitted: string,
       startTime: number,
       endTime: number,
-      category: string,
+      category: Category,
       actionType: string,
       votes: number,
       views: number,
