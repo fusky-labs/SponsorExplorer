@@ -1,4 +1,4 @@
-import { VideoSegments } from "@/types"
+import type { VideoSegments } from "@/types"
 import { formatTimecode } from "@/utils"
 import {
   LuFastForward as SkipIcon,
@@ -21,7 +21,7 @@ export function LengthBadge(props: LengthBadgeProps) {
     msRoundFactor: 3,
   } satisfies Parameters<typeof formatTimecode>[1]
 
-  const timeDiff = props.endTime - props.startTime
+  const segmentLength = (props.endTime - props.startTime).toFixed(2)
 
   return (
     <span className="whitespace-nowrap inline-flex items-center gap-x-1.5">
@@ -41,14 +41,7 @@ export function LengthBadge(props: LengthBadgeProps) {
             <>
               <span>{` – `}</span>
               <span>{formatTimecode(props.endTime, timecodeOptions)}</span>
-              <span className="text-sm">
-                (
-                {formatTimecode(timeDiff, {
-                  includeMilliseconds: true,
-                  msRoundFactor: 2,
-                })}
-                )
-              </span>
+              <span className="text-sm">({`${segmentLength}s`})</span>
             </>
           ) : null}
         </div>

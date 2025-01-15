@@ -1,4 +1,4 @@
 export * from "./TabStateProvider"
-export * from "./ItemViewProvider"
-export * from "./SegmentStoreProvider"
-export * from "./VideoListPeekContext"
+export * from "./ViewItemProvider"
+export * from "./video/VideoInfoProvider"
+export * from "./VideoListProvider"
