@@ -1,4 +1,4 @@
-import { VideoSegments } from "@/types"
+import type { VideoSegments } from "@/types"
 import { formatTimecode } from "@/utils"
 import {
   LuFastForward as SkipIcon,

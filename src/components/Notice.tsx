@@ -32,7 +32,7 @@ export function Notice(
   const a11yHeadingId = `kui-notice-title-${_id}`
 
   const iconProps = {
-    size: 20,
+    size: 21,
     className: "flex-shrink-0",
   }
 

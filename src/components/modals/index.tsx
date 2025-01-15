@@ -1,4 +1,4 @@
 export * from "./NavbarOptionsModal"
 export * from "./NavbarSearchModal"
 
-export * from "./DetailedStatsModal"
+export * from "./DetailedSegmentStatsModal"

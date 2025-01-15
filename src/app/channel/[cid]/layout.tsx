@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import type { ChannelIdRouteParams } from "@/types"
-import { ViewItemContext, ViewItemProvider } from "@/context"
-import { ChannelInfo } from "@/components/headers"
+import { type ViewItemContext, ViewItemProvider } from "@/context"
+import { ChannelInfo } from "@/components/Headers"
 import { headers } from "next/headers"
 
 export async function generateMetadata(
@@ -20,10 +20,13 @@ export default async function ChannelLayout({
 }: Readonly<{ children: React.ReactNode } & ChannelIdRouteParams>) {
   const _params = await props.params
 
-  const searchParams = new URLSearchParams((await headers()).get("x-url-params")!)
+  const searchParams = new URLSearchParams(
+    (await headers()).get("x-url-params")!,
+  )
 
   const viewParam = searchParams.get("view") as ViewItemContext["view"]
-  const isValidViews = viewParam === "compact" || viewParam === "list" || viewParam === "grid"
+  const isValidViews =
+    viewParam === "compact" || viewParam === "list" || viewParam === "grid"
 
   return (
     <div

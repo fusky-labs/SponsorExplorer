@@ -1,7 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { youtube } from "@/utils/YT"
-import { parseDateStr } from "@/utils"
-import { NativeVideoChapters } from "@/types"
+import type { NativeVideoChapters } from "@/types"
 
 export async function GET(request: NextRequest) {
   const urlParams = new URL(request.url).searchParams

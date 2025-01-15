@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { LuBookmark, LuSearch, LuSettings } from "react-icons/lu"
 import { _Link as Link } from "../Link"
-import { NavbarOptionsModal, NavbarSearchModal } from "../modals"
+import { NavbarOptionsModal, NavbarSearchModal } from "../Modals"
 
 export function Navbar() {
   const [searchToggle, setSearchDialogToggle] = useState(false)

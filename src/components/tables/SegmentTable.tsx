@@ -42,7 +42,7 @@ export function SegmentTable(props: SegmentTableProps) {
             <th></th>
           </tr>
         </thead>
-        <tbody className="hover:[&_tr]:bg-neutral-200 hover:[&_tr]:bg-opacity-70 ">
+        <tbody>
           {props.segments.map((segment) => (
             <SegmentTableRow key={segment.UUID} {...segment} />
           ))}

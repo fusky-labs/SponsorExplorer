@@ -1,5 +1,5 @@
 import { youtube } from "@/utils/YT"
-import { yt } from "@/utils/YT.types";
+import type { yt } from "@/utils/YT.types"
 import { type NextRequest, NextResponse } from "next/server"
 
 export async function GET(request: NextRequest) {

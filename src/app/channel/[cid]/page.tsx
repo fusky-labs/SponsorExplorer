@@ -1,6 +1,6 @@
 import type { ChannelIdRouteParams } from "@/types"
 import type { Metadata } from "next"
-import { VideoItemContainer } from "@/components/videoItems"
+import { VideoItemContainer } from "@/components/VideoItems"
 
 export async function generateMetadata(
   props: ChannelIdRouteParams,

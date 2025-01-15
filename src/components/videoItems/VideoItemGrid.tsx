@@ -1,5 +1,5 @@
-import { LuLock, LuMoreVertical, LuSparkle, LuSparkles } from "react-icons/lu"
-import { SharedVideoItemProps } from "./VideoItem.types"
+import { LuLock, LuMoreVertical, LuSparkles } from "react-icons/lu"
+import type { SharedVideoItemProps } from "./VideoItem.types"
 
 export default function VideoItemGrid(props: SharedVideoItemProps) {
   return (

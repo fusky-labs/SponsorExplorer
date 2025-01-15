@@ -2,7 +2,7 @@
 
 import type { SegmentBank } from "@/types"
 import { cn, formatTimecode, pluralFormatter } from "@/utils"
-import { LuBarChartHorizontal, LuExternalLink } from "react-icons/lu"
+import { LuBarChartHorizontal } from "react-icons/lu"
 
 interface SegmentStatsInlineProps extends Partial<SegmentBank> {
   onDetailStatsShow?: React.MouseEventHandler<HTMLButtonElement>

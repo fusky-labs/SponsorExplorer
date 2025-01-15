@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { type NextRequest, NextResponse } from "next/server"
 import { allSegments, padIterations, SponsorBlock } from "@/utils"
-import { sb } from "@/utils/SponsorBlock.types"
+import type { sb } from "@/utils/SponsorBlock.types"
 
 type SortByLiteral = "asc" | "desc"
 type SBSegment = sb.Responses.SearchSegments['segments']
@@ -114,7 +114,7 @@ export async function GET(request: NextRequest) {
   )
 
   const lockValues = Object.entries(_lockedSegments)
-    .map(([_, value]) => value)
+    .map(([, value]) => value)
     .filter(Boolean) as sb.Responses.LockCategories[]
 
   if (hasLockedSegments) {

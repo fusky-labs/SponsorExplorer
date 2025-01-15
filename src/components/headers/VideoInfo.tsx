@@ -1,31 +1,33 @@
 "use client"
 
 import { useState } from "react"
-import { useSegmentStoreContext } from "@/context"
-import type { VideoInfoType } from "@/types"
+import { useVideoInfoContext } from "@/context"
 import { parseDateStr } from "@/utils"
 import dynamic from "next/dynamic"
 import { _Link as Link } from "@/components/Link"
 import { Notice } from "../Notice"
 import { SegmentStatsInline } from "../SegmentStatsInline"
-import { DetailedStatsModal } from "../modals"
-import { LuExternalLink, LuGlasses, LuGanttChartSquare } from "react-icons/lu"
+
+import { DetailedSegmentStatsModal } from "../Modals"
+import {
+  LuExternalLink,
+  LuGlasses,
+  LuGanttChartSquare,
+  LuLink2,
+} from "react-icons/lu"
+import { Separator } from "../Separator"
 
 const YouTube = dynamic(() => import("../YouTube").then((c) => c.YouTube), {
   ssr: false,
 })
 
-interface VideoInfoProps extends VideoInfoType {
-  id: string
-}
-
-export function VideoInfo(props: VideoInfoProps) {
-  const { segmentData } = useSegmentStoreContext()
+export function VideoInfo() {
+  const { segmentData, videoDetails } = useVideoInfoContext()
   const [detailsModal, setToggleDetailsModal] = useState(false)
 
   const _submissionCount = segmentData.submissionCount ?? 0
 
-  const { video } = props
+  const { video } = videoDetails
 
   let _isoDate
   let _readableDate
@@ -47,7 +49,7 @@ export function VideoInfo(props: VideoInfoProps) {
     <>
       <div className="overflow-hidden rounded-lg flex lg:flex-row flex-col bg-neutral-100">
         <div className="aspect-video 2xl:w-[48rem] xl:w-[38rem] lg:w-[32rem] w-full h-full overflow-hidden relative">
-          <YouTube id={props.id} />
+          <YouTube id={videoDetails.id} />
         </div>
         {/* Video details */}
         <div className="flex-1 px-5 py-4 flex flex-col gap-y-3 prose-h1:text-2xl prose-h1:font-bold w-full">
@@ -56,19 +58,19 @@ export function VideoInfo(props: VideoInfoProps) {
             <>
               <div className="space-y-1">
                 <span className="opacity-75">Segments for</span>
-                <h1 translate="no">{props.video.title}</h1>
+                <h1 translate="no">{videoDetails.video.title}</h1>
               </div>
               <div className="inline-flex flex-wrap gap-x-2">
                 <div className="sr-only" id="view-channel-segments-a11y">
                   {"View channel segments for "}
-                  <span translate="no">{props.video.channelTitle}</span>
+                  <span translate="no">{videoDetails.video.channelTitle}</span>
                 </div>
                 <Link
                   translate="no"
                   aria-labelledby="view-channel-segments-a11y"
-                  href={`/channel/${props.video.channelId}`}
+                  href={`/channel/${videoDetails.video.channelId}`}
                 >
-                  {props.video.channelTitle}
+                  {videoDetails.video.channelTitle}
                 </Link>
                 <time dateTime={_isoDate}>{_readableDate}</time>
               </div>
@@ -94,8 +96,18 @@ export function VideoInfo(props: VideoInfoProps) {
           {/* Bottom content */}
           <div className="flex-1" />
           <div className="flex items-center mt-auto gap-x-2">
+            <button className="inline-flex gap-x-1.5 items-center">
+              <LuLink2 size={17} />
+              <span>Copy link</span>
+            </button>
+            <Separator />
+            <button className="inline-flex gap-x-1.5 items-center">
+              <LuGlasses size={17} />
+              <span>For nerds</span>
+            </button>
+            <Separator />
             <Link
-              href={`https://sb.ltn.fi/video/${props.id}`}
+              href={`https://sb.ltn.fi/video/${videoDetails.id}`}
               className="inline-flex gap-x-1.5 items-center"
             >
               <span>
@@ -103,16 +115,14 @@ export function VideoInfo(props: VideoInfoProps) {
               </span>
               <LuExternalLink size={17} />
             </Link>
-            <div className="ml-1.5 h-4 border-l-2 border-neutral-400" />
-            <button className="inline-flex gap-x-1.5 items-center">
-              <LuGlasses size={17} />
-              <span>For nerds</span>
-            </button>
           </div>
         </div>
       </div>
       {/* Modals */}
-      <DetailedStatsModal open={detailsModal} onClose={toggleDetailsDialog} />
+      <DetailedSegmentStatsModal
+        open={detailsModal}
+        onClose={toggleDetailsDialog}
+      />
     </>
   )
 }

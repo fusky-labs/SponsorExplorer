@@ -1,5 +1,5 @@
 export * from "./TabStateProvider"
 export * from "./ViewItemProvider"
-export * from "./SegmentStoreProvider"
-export * from "./VideoListPeekContext"
+export * from "./video/VideoInfoProvider"
+export * from "./VideoListProvider"
 export * from "./TimelineClientProvider"
