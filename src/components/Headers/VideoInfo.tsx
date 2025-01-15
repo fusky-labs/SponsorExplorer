@@ -9,7 +9,7 @@ import { Notice } from "../Notice"
 import { SegmentStatsInline } from "../SegmentStatsInline"
 
 import { DetailedSegmentStatsModal } from "../Modals"
-import { LuExternalLink, LuGlasses, LuLink2 } from "react-icons/lu"
+import { LuExternalLink, LuGlasses, LuLink2, LuPin } from "react-icons/lu"
 import { Separator } from "../Separator"
 
 const YouTube = dynamic(() => import("../YouTube").then((c) => c.YouTube), {
@@ -84,6 +84,11 @@ export function VideoInfo() {
           {/* Bottom content */}
           <div className="flex-1" />
           <div className="flex items-center mt-auto gap-x-2">
+            <button className="inline-flex gap-x-1.5 items-center">
+              <LuPin size={17} />
+              <span>Pin player</span>
+            </button>
+            <Separator />
             <button className="inline-flex gap-x-1.5 items-center">
               <LuLink2 size={17} />
               <span>Copy link</span>

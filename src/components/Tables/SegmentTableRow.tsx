@@ -99,6 +99,9 @@ export function SegmentTableRow(props: SegmentTableRowProps) {
             >
               <LuFilter size={19} />
             </button>
+            <button className="p-0.5">
+              <LuCopy size={19} />
+            </button>
           </div>
         </div>
       </td>
