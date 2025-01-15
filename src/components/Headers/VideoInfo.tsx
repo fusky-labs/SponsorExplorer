@@ -9,12 +9,7 @@ import { Notice } from "../Notice"
 import { SegmentStatsInline } from "../SegmentStatsInline"
 
 import { DetailedSegmentStatsModal } from "../Modals"
-import {
-  LuExternalLink,
-  LuGlasses,
-  LuGanttChartSquare,
-  LuLink2,
-} from "react-icons/lu"
+import { LuExternalLink, LuGlasses, LuLink2 } from "react-icons/lu"
 import { Separator } from "../Separator"
 
 const YouTube = dynamic(() => import("../YouTube").then((c) => c.YouTube), {
