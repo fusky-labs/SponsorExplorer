@@ -29,9 +29,9 @@ While I was in the middle of writing a userscript for [sb.ltn.fi][sbb-prod] to a
 | Filter and sort segments | ✅                       | Has added functionality to filter locked segments |
 | Playback videos[^1]      | Directly uses `<iframe>` | Mounts `<iframe>` client-side                     |
 
-[^1]: YouTube has a feature on embeded players when, if copyrighted content is present, the player will return "This video is unavailable" error and block playback.[\[1\]](https://help.myfitapp.de/en/articles/5450810-youtube-videos-showing-video-unavailable) This issue isn't present when mounting the player client-side via `new YT.Player` since it adds necessary headers that will allow playback of copyrighted content, except when the video is private, age-restricted, or when the uploader forbids their content from being embedded from other websites.[\[2\]](https://stackoverflow.com/questions/51424578/embed-youtube-code-is-not-working-in-html/55661292#55661292)
+[^1]: YouTube has a feature on embeded players when, if copyrighted content is present, the player will return "Video unavailable" error and block playback.[\[1\]](https://help.myfitapp.de/en/articles/5450810-youtube-videos-showing-video-unavailable) This issue isn't present when mounting the player client-side via `new YT.Player` since it adds necessary headers that will allow playback of copyrighted content, except when the video is private, age-restricted, or when the uploader forbids their content from being embedded from other websites.[\[2\]](https://stackoverflow.com/questions/51424578/embed-youtube-code-is-not-working-in-html/55661292#55661292)
 
-If the SponsorBlock returns a `5xx` response, it automatically falls back and crawls [sb.ltn.fi][sbb-prod] for cached data via [SBbrowser-API-Wrapper](https://github.com/kuroji-fusky/SBbrowser-API-Wrapper).
+If SponsorBlock API returns a `5xx` response, it automatically falls back and crawls [sb.ltn.fi][sbb-prod] for cached data via [SBbrowser-API-Wrapper](https://github.com/kuroji-fusky/SBbrowser-API-Wrapper).
 
 ## Installation and Setup
 
