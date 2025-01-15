@@ -9,7 +9,12 @@ import { Notice } from "../Notice"
 import { SegmentStatsInline } from "../SegmentStatsInline"
 
 import { DetailedSegmentStatsModal } from "../Modals"
-import { LuExternalLink, LuGlasses, LuLink2 } from "react-icons/lu"
+import {
+  LuExternalLink,
+  LuGanttChartSquare,
+  LuGlasses,
+  LuLink2,
+} from "react-icons/lu"
 import { Separator } from "../Separator"
 
 const YouTube = dynamic(() => import("../YouTube").then((c) => c.YouTube), {
@@ -82,7 +87,7 @@ export function VideoInfo() {
             onDetailStatsShow={toggleDetailsDialog}
           />
           <Link
-            href={`/video/${props.id}/timeline`}
+            href={`/video/${videoDetails.id}/timeline`}
             className="py-0.5 px-1.5 flex items-center gap-x-1.5 rounded-md hover:bg-neutral-300"
           >
             <LuGanttChartSquare size={17} />
