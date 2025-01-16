@@ -9,9 +9,9 @@ import {
 const NoticeBox = cva("flex items-center gap-x-2.5 rounded-md px-3.5 py-2.5", {
   variants: {
     intent: {
-      info: "bg-blue-100",
-      warn: "bg-yellow-100",
-      alert: "bg-red-100",
+      info: "bg-blue-100 dark:bg-blue-800/30",
+      warn: "bg-yellow-100 dark:bg-yellow-800/30",
+      alert: "bg-red-100 dark:bg-red-800/30",
     },
   },
   compoundVariants: [

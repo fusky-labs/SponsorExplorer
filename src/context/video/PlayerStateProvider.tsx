@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useState } from "react"
+import { createContext, useContext, useState } from "react"
 import type { MapUseStateSetters } from "../context.types"
 import { noop } from "lodash-es"
 
@@ -26,10 +26,10 @@ const PlayerStateContext = createContext<PlayerStateContextType>({
 export function PlayerStateProvider({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const [currentTime, setCurrentTime] = useState<PlayerStateContextType['currentTime']>(0)
-  const [playerState, setPlayerState] = useState<PlayerStateContextType['playerState']>("stopped")
+  const [currentTime, setCurrentTime] = useState<PlayerStateContextType["currentTime"]>(0)
+  const [playerState, setPlayerState] = useState<PlayerStateContextType["playerState"]>("stopped")
 
-  const [isPlayerPinned, setIsPlayerPinned] = useState<PlayerStateContextType['isPlayerPinned']>(false)
+  const [isPlayerPinned, setIsPlayerPinned] = useState<PlayerStateContextType["isPlayerPinned"]>(false)
 
   return (
     <PlayerStateContext.Provider
@@ -45,4 +45,16 @@ export function PlayerStateProvider({
       {children}
     </PlayerStateContext.Provider>
   )
+}
+
+export const usePlayerStateContext = () => {
+  const context = useContext(PlayerStateContext)
+
+  if (!context) {
+    throw new Error(
+      "usePlayerStateContext must be used within a PlayerStateProvider",
+    )
+  }
+
+  return context
 }

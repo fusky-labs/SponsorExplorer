@@ -1,16 +1,11 @@
+import type { Metadata } from "next"
+import { TabStateProvider } from "@/context"
 import { ShowIf } from "@/components"
 import { VideoInfo } from "@/components/Headers"
 import { SegmentClientWrapper } from "@/components/SegmentClientWrapper"
 import { VideoListSidebar } from "@/components/Sidebar"
-import {
-  VideoInfoProvider,
-  TabStateProvider,
-  LiveSegmentProvider,
-} from "@/context"
-import type { DefineRouteParams, VideoInfoType, VideoSegments } from "@/types"
-import { fetchWrapper } from "@/utils/fetchWrapper"
-import type { Metadata } from "next"
-import { headers } from "next/headers"
+import type { DefineRouteParams } from "@/types"
+import { fetchVideoData } from "@/utils"
 
 type RouteParams = DefineRouteParams<
   { id: string },
@@ -25,18 +20,6 @@ type RouteParams = DefineRouteParams<
     inspectId: string
   }>
 >
-
-async function fetchVideoData(id: string) {
-  const urlBase = (await headers()).get("x-url-origin")
-  const [fetchVideoInfo] = await fetchWrapper<VideoInfoType>(
-    `${urlBase}/api/yt/video?id=${id}&min=1`,
-    {
-      cache: "force-cache",
-    },
-  )
-
-  return fetchVideoInfo
-}
 
 export async function generateMetadata(props: RouteParams): Promise<Metadata> {
   const params = await props.params
@@ -55,7 +38,6 @@ export async function generateMetadata(props: RouteParams): Promise<Metadata> {
 
 export default async function VideoPage(props: RouteParams) {
   const searchParams = await props.searchParams
-  const params = await props.params
 
   const queryFilters = searchParams.filters
   const querySorts = searchParams.sort
@@ -64,35 +46,20 @@ export default async function VideoPage(props: RouteParams) {
   const isParamsList = searchParams.list
   const hasInspectId = searchParams.inspectId
 
-  const urlBase = (await headers()).get("x-url-origin")
-
-  const [videoInfo, [initialData]] = await Promise.all([
-    fetchVideoData(params.id),
-    fetchWrapper<VideoSegments>(`${urlBase}/api/sb/segments?id=${params.id}`, {
-      priority: "high",
-    }),
-  ])
-
   return (
     <div className="mt-4 flex" data-video-idroot="">
-      <VideoInfoProvider
-        videoData={{ ...videoInfo, id: params.id }}
-        initialSegmentData={initialData}
-      >
-        <ShowIf condition={isParamsList}>
-          <div className="[align-self:start] sticky top-16 flex-shrink-0 h-[90dvh] max-w-[300px]">
-            <VideoListSidebar />
-          </div>
-        </ShowIf>
-        <div className="mx-auto px-6 max-w-screen-2xl w-full">
-          <LiveSegmentProvider>
-            <VideoInfo />
-            <TabStateProvider>
-              <SegmentClientWrapper />
-            </TabStateProvider>
-          </LiveSegmentProvider>
+      {/* Left sidebar for list of videos */}
+      <ShowIf condition={isParamsList}>
+        <div className="[align-self:start] sticky top-16 flex-shrink-0 h-[90dvh] max-w-[300px]">
+          <VideoListSidebar />
         </div>
-      </VideoInfoProvider>
+      </ShowIf>
+      <div className="mx-auto px-6 max-w-screen-2xl w-full">
+        <VideoInfo />
+        <TabStateProvider>
+          <SegmentClientWrapper />
+        </TabStateProvider>
+      </div>
     </div>
   )
 }
