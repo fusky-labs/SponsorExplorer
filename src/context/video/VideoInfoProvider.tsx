@@ -2,17 +2,26 @@
 
 import type { VideoInfoType, VideoSegments } from "@/types"
 import { noop } from "lodash-es"
-import { createContext, useContext, useState } from "react"
 import type { MapUseStateSetters } from "../context.types"
+import { createContext, useContext, useState } from "react"
 import { usePathname } from "next/navigation"
+import { VideoSidebarProvider } from "./VideoSidebarProvider"
 
-type VideoInfoContextType = Omit<
-  MapUseStateSetters<{
+type VideoInfoContextType = MapUseStateSetters<
+  {
     videoDetails: VideoInfoType & { id: string }
     segmentData: Partial<VideoSegments>
-  }>,
-  "setVideoDetails"
+  },
+  "videoDetails"
 >
+
+const INITIAL_SEGMENT_DATA: VideoInfoContextType["segmentData"] = {
+  submissionCount: 0,
+  segments: [],
+  lockReason: null,
+  lockedSegments: {},
+  hasLockedSegments: false,
+}
 
 const INITIAL_VIDEO_DATA: VideoInfoContextType["videoDetails"] = {
   state: "NOT_FOUND",
@@ -27,14 +36,6 @@ const INITIAL_VIDEO_DATA: VideoInfoContextType["videoDetails"] = {
   },
 }
 
-const INITIAL_SEGMENT_DATA: VideoInfoContextType["segmentData"] = {
-  submissionCount: 0,
-  segments: [],
-  lockReason: null,
-  lockedSegments: {},
-  hasLockedSegments: false,
-}
-
 const VideoInfoContext = createContext<VideoInfoContextType>({
   segmentData: INITIAL_SEGMENT_DATA,
   videoDetails: INITIAL_VIDEO_DATA,
@@ -46,7 +47,9 @@ const validVideoPathOnly = () => {
   const pathname = usePathname()
 
   if (!pathname.startsWith("/video/")) {
-    throw new Error("useVideoInfoContext should only be used in `/video/*` routes only")
+    throw new Error(
+      "useVideoInfoContext should only be used in `/video/*` routes only",
+    )
   }
 }
 
@@ -54,7 +57,9 @@ export const useVideoInfoContext = () => {
   const context = useContext(VideoInfoContext)
 
   if (!context) {
-    throw new Error("useVideoInfoContext must be used within a VideoInfoProvider")
+    throw new Error(
+      "useVideoInfoContext must be used within a VideoInfoProvider",
+    )
   }
 
   validVideoPathOnly()
@@ -79,7 +84,7 @@ export function VideoInfoProvider({
     <VideoInfoContext.Provider
       value={{ videoDetails: videoData, segmentData, setSegmentData }}
     >
-      {children}
+      <VideoSidebarProvider>{children}</VideoSidebarProvider>
     </VideoInfoContext.Provider>
   )
 }

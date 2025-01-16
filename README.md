@@ -22,6 +22,17 @@ browsing [SponsorBlock][sb] segments and chapters!
 
 While I was in the middle of writing a userscript for [sb.ltn.fi][sbb-prod] to append titles and thumbnails using the YouTube API, along with other enhancements, I had this idea to remake SBbrowser but with an approach to a modern redesign and all the different features such as segment playback, a watchlist, etc.
 
+### Differences
+
+|                          | SBbrowser                | SponsorExplorer                                   |
+| :----------------------- | :----------------------- | :------------------------------------------------ |
+| Filter and sort segments | ✅                       | Has added functionality to filter locked segments |
+| Playback videos[^1]      | Directly uses `<iframe>` | Mounts `<iframe>` client-side                     |
+
+[^1]: YouTube has a feature on embeded players when, if copyrighted content is present, the player will return "Video unavailable" error and block playback.[\[1\]](https://help.myfitapp.de/en/articles/5450810-youtube-videos-showing-video-unavailable) This issue isn't present when mounting the player client-side via `new YT.Player` since it adds necessary headers that will allow playback of copyrighted content, except when the video is private, age-restricted, or when the uploader forbids their content from being embedded from other websites.[\[2\]](https://stackoverflow.com/questions/51424578/embed-youtube-code-is-not-working-in-html/55661292#55661292)
+
+If SponsorBlock API returns a `5xx` response, it automatically falls back and crawls [sb.ltn.fi][sbb-prod] for cached data via [SBbrowser-API-Wrapper](https://github.com/kuroji-fusky/SBbrowser-API-Wrapper).
+
 ## Installation and Setup
 
 Requires Node.js v20 and the Yarn package manager
@@ -68,7 +79,7 @@ cp .env.local.example .env.local
 >
 > The YouTube Data API has a default quota limit of 10,000 cost per day and it can impact the core functionality of SponsorExplorer, so its search function has a limit of 20 search queries to mitigate the quota limit. You can increase the 10,000 cap within GCP, but it's a tedious process.
 >
-> **Breakdown of costs used for SponsorExplorer**[^1]
+> **Breakdown of costs used for SponsorExplorer**[^2]
 >
 > | Method               | Cost |
 > | :------------------- | ---- |
@@ -77,7 +88,7 @@ cp .env.local.example .env.local
 > | `channels.list`      | 1    |
 > | `search.list`        | 100  |
 
-[^1]: <https://developers.google.com/youtube/v3/determine_quota_cost>
+[^2]: <https://developers.google.com/youtube/v3/determine_quota_cost>
 
 ### (Optional) Securing your API key
 
@@ -93,5 +104,5 @@ Optionally, as an added security layer, you can restrict the API key you've crea
 [MIT](/LICENSE)
 
 [sbb]: https://github.com/Lartza/SBbrowser
-[sbb-prod]: https://sb.ltn.fi
+[sbb-prod]: https://sb.ltn.fi/
 [sb]: https://github.com/ajayyy/SponsorBlock

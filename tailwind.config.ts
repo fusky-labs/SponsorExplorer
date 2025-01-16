@@ -2,10 +2,13 @@ import type { Config } from "tailwindcss"
 import typographyPlugin from "@tailwindcss/typography"
 
 export default {
-  darkMode: "class",
   experimental: {
     optimizeUniversalDefaults: true
   },
+  darkMode: ["variant", [
+    "html.dark &",
+    "@media (prefers-color-scheme: dark) { & }"
+  ]],
   content: [
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",

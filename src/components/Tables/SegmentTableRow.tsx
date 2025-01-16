@@ -51,7 +51,7 @@ export function SegmentTableRow(props: SegmentTableRowProps) {
         props.shadowHidden || props.hidden || props.votes <= -2
           ? "opacity-50 hover:opacity-100"
           : undefined,
-        "hover:bg-neutral-300/40",
+        "hover:bg-neutral-300/40 dark:hover:bg-neutral-800/40",
       )}
     >
       <td>
@@ -98,6 +98,9 @@ export function SegmentTableRow(props: SegmentTableRowProps) {
               title={`Filter out the ${sbCategoryMap[props.category].label} category (Alt+Click to negate)`}
             >
               <LuFilter size={19} />
+            </button>
+            <button className="p-0.5">
+              <LuCopy size={19} />
             </button>
           </div>
         </div>

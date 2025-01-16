@@ -14,6 +14,7 @@ import {
   LuGanttChartSquare,
   LuGlasses,
   LuLink2,
+  LuPin,
 } from "react-icons/lu"
 import { Separator } from "../Separator"
 
@@ -47,7 +48,10 @@ export function VideoInfo() {
 
   return (
     <>
-      <div className="overflow-hidden rounded-lg flex lg:flex-row flex-col bg-neutral-100">
+      <div
+        data-player-root-anchor=""
+        className="overflow-hidden rounded-lg flex lg:flex-row flex-col bg-neutral-100 dark:bg-neutral-900"
+      >
         <div className="aspect-video 2xl:w-[48rem] xl:w-[38rem] lg:w-[32rem] w-full h-full overflow-hidden relative">
           <YouTube id={videoDetails.id} />
         </div>
@@ -96,6 +100,11 @@ export function VideoInfo() {
           {/* Bottom content */}
           <div className="flex-1" />
           <div className="flex items-center mt-auto gap-x-2">
+            <button className="inline-flex gap-x-1.5 items-center">
+              <LuPin size={17} />
+              <span>Pin player</span>
+            </button>
+            <Separator />
             <button className="inline-flex gap-x-1.5 items-center">
               <LuLink2 size={17} />
               <span>Copy link</span>

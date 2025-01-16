@@ -14,7 +14,7 @@ export function Navbar() {
 
   return (
     <>
-      <div className="z-50 sticky top-0 backdrop-blur-md bg-opacity-75 bg-white">
+      <div className="z-50 sticky top-0 backdrop-blur-md bg-opacity-75 dark:bg-opacity-75 bg-white dark:bg-neutral-950">
         <nav className="flex px-6 py-3 gap-x-3.5">
           <div className="flex items-center select-none">
             <Link
