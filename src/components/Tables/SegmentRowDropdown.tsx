@@ -17,7 +17,7 @@ function TmpButtonItem(props: { text: string; icon?: IconType }) {
   return (
     <MenuItem
       as="button"
-      className="px-3.5 py-1.5 text-left rounded-md flex gap-x-2 data-[focus]:bg-neutral-200"
+      className="px-3.5 py-1.5 text-left rounded-md flex gap-x-2 data-[focus]:bg-neutral-200 dark:data-[focus]:bg-neutral-900"
     >
       <span className="flex-1">{props.text}</span>
       {Icon ? <Icon size={19} /> : null}
@@ -37,7 +37,7 @@ export function SegmentRowDropdown() {
         anchor="bottom end"
         transition
         modal={false}
-        className="bg-white shadow-md p-2 rounded-md transition duration-100 ease-in-out data-[closed]:opacity-0 grid"
+        className="bg-white dark:bg-neutral-950 shadow-md p-2 rounded-md transition duration-100 ease-in-out data-[closed]:opacity-0 grid"
       >
         <MenuSection className="contents">
           <TmpButtonItem text="Inspect..." icon={LuScanLine} />

@@ -1,7 +1,12 @@
+import { ShowIf } from "@/components"
 import { VideoInfo } from "@/components/Headers"
 import { SegmentClientWrapper } from "@/components/SegmentClientWrapper"
 import { VideoListSidebar } from "@/components/Sidebar"
-import { VideoInfoProvider, TabStateProvider } from "@/context"
+import {
+  VideoInfoProvider,
+  TabStateProvider,
+  LiveSegmentProvider,
+} from "@/context"
 import type { DefineRouteParams, VideoInfoType, VideoSegments } from "@/types"
 import { fetchWrapper } from "@/utils/fetchWrapper"
 import type { Metadata } from "next"
@@ -17,6 +22,7 @@ type RouteParams = DefineRouteParams<
     historyModal: boolean
     segmentLockModal: boolean
     list: string
+    inspectId: string
   }>
 >
 
@@ -38,7 +44,7 @@ export async function generateMetadata(props: RouteParams): Promise<Metadata> {
 
   if (!video) {
     return {
-      title: `Segments from video ID: ${params.id} `,
+      title: `Segments from video ID: ${params.id}`,
     }
   }
 
@@ -56,6 +62,7 @@ export default async function VideoPage(props: RouteParams) {
   const queryTab = searchParams.tab
   // Will include a sidebar for any playlist or channel uploads to be displayed
   const isParamsList = searchParams.list
+  const hasInspectId = searchParams.inspectId
 
   const urlBase = (await headers()).get("x-url-origin")
 
@@ -68,22 +75,24 @@ export default async function VideoPage(props: RouteParams) {
 
   return (
     <div className="mt-4 flex" data-video-idroot="">
-      {isParamsList ? (
-        <div className="[align-self:start] sticky top-16 flex-shrink-0 h-[90dvh] max-w-[300px]">
-          <VideoListSidebar />
+      <VideoInfoProvider
+        videoData={{ ...videoInfo, id: params.id }}
+        initialSegmentData={initialData}
+      >
+        <ShowIf condition={isParamsList}>
+          <div className="[align-self:start] sticky top-16 flex-shrink-0 h-[90dvh] max-w-[300px]">
+            <VideoListSidebar />
+          </div>
+        </ShowIf>
+        <div className="mx-auto px-6 max-w-screen-2xl w-full">
+          <LiveSegmentProvider>
+            <VideoInfo />
+            <TabStateProvider>
+              <SegmentClientWrapper />
+            </TabStateProvider>
+          </LiveSegmentProvider>
         </div>
-      ) : null}
-      <div className="mx-auto px-6 max-w-screen-2xl w-full">
-        <VideoInfoProvider
-          videoData={{ ...videoInfo, id: params.id }}
-          initialSegmentData={initialData}
-        >
-          <VideoInfo />
-          <TabStateProvider>
-            <SegmentClientWrapper />
-          </TabStateProvider>
-        </VideoInfoProvider>
-      </div>
+      </VideoInfoProvider>
     </div>
   )
 }

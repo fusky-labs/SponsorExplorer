@@ -84,7 +84,7 @@ const CategoryReadableLabels: Readonly<Record<Exclude<Category, "chapter">, stri
   sponsor: "Sponsor",
   selfpromo: "Unpaid/Self Promotion",
   exclusive_access: "Exclusive Access",
-  filler: "Filler Tangent",
+  filler: "Tangents/Jokes",
   poi_highlight: "Highlight"
 }
 

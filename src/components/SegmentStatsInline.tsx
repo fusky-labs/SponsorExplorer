@@ -25,7 +25,7 @@ export function SegmentStatsInline(props: SegmentStatsInlineProps) {
   return (
     <div
       data-segment-stats-inline=""
-      className="flex flex-wrap items-center gap-x-1 py-1.5 px-2.5 border border-neutral-400 rounded-md"
+      className="flex flex-wrap items-center gap-x-1 py-1.5 px-2.5 border border-neutral-400 dark:border-neutral-600 rounded-md"
     >
       <span>
         <span className="font-bold">{_submissionCount ?? 0}</span>
@@ -38,7 +38,7 @@ export function SegmentStatsInline(props: SegmentStatsInlineProps) {
           (<strong>{totalSegmentDuration}</strong> of segment(s) accrued)
         </span>
       ) : null}
-      <div className="ml-1.5 h-4 border-l-2 border-neutral-400" />
+      <div className="ml-1.5 h-4 border-l-2 border-neutral-400 dark:border-neutral-600" />
       <button
         onClick={props.onDetailStatsShow}
         className={cn(
