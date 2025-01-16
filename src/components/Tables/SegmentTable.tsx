@@ -9,7 +9,7 @@ interface SegmentTableProps extends Pick<VideoSegments, "segments"> {
 export function SegmentTable(props: SegmentTableProps) {
   return (
     <>
-      <table className="hidden lg:table w-full *:[&_tr]:px-2 *:[&_tr]:py-2.5 [&_td]:border-b [&_td]:border-neutral-200 text-base">
+      <table className="hidden lg:table w-full *:[&_tr]:px-2 *:[&_tr]:py-2.5 [&_td]:border-b [&_td]:border-neutral-200 dark:[&_td]:border-neutral-700 text-base">
         <colgroup>
           <col style={{ width: "3.5%" }} />
           <col style={{ width: "3.5%" }} />
@@ -20,7 +20,7 @@ export function SegmentTable(props: SegmentTableProps) {
           <col style={{ width: "1%" }} />
         </colgroup>
         <thead className="*:text-left">
-          <tr className="sticky top-28 z-20 bg-white">
+          <tr className="sticky top-28 z-20 bg-white dark:bg-neutral-950">
             <th>
               <span className="whitespace-nowrap">Date submitted</span>
             </th>

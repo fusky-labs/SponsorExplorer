@@ -23,7 +23,7 @@ export function DetailedSegmentStatsModal(
       {/* Backdrop */}
       <DialogBackdrop
         transition
-        className="fixed bg-black/30 inset-0 flex w-screen items-center justify-center p-4 duration-100 ease-out data-[closed]:opacity-0"
+        className="fixed bg-black/50 inset-0 flex w-screen items-center justify-center p-4 duration-100 ease-out data-[closed]:opacity-0"
         onClick={props.onClose as unknown as React.MouseEventHandler}
         aria-hidden
       />
@@ -32,13 +32,13 @@ export function DetailedSegmentStatsModal(
         <DialogPanel
           transition
           className={cn(
-            "bg-white *:px-4 border-2 border-red-400 absolute w-full max-w-2xl transition ease-in-out rounded-xl",
+            "bg-white dark:bg-neutral-950 *:px-4 border-2 border-red-400 absolute w-full max-w-2xl transition ease-in-out rounded-xl",
             // Leave
             "duration-200 data-[closed]:translate-y-2 data-[closed]:opacity-0",
           )}
         >
           {/* Titlebar */}
-          <div className="flex items-center gap-x-3.5 border-b py-3.5 border-b-neutral-300">
+          <div className="flex items-center gap-x-3.5 border-b py-3.5 border-b-neutral-300 dark:border-b-neutral-700">
             <DialogTitle className="sr-only text-xl font-bold flex-1 whitespace-nowrap">
               {"Detailed stats for "}
               <span translate="no">{videoDetails.video.title}</span>
