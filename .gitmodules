@@ -1,0 +1,3 @@
+[submodule "sbbrowser-api"]
+	path = sbbrowser-api
+	url = https://github.com/kuroji-fusky/SBbrowser-API-Wrapper

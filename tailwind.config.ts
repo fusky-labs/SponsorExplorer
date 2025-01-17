@@ -2,11 +2,19 @@ import type { Config } from "tailwindcss"
 import typographyPlugin from "@tailwindcss/typography"
 
 export default {
-  darkMode: "class",
   experimental: {
     optimizeUniversalDefaults: true
   },
-  content: ["./src/**/*.{html,svelte,ts}"],
+  darkMode: ["variant", [
+    "html.dark &",
+    "@media (prefers-color-scheme: dark) { & }"
+  ]],
+  content: [
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    // A specific file where SponBlock classes are stored here
+    "./src/utils/constants.ts"
+  ],
   theme: {
     extend: {
       colors: {
