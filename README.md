@@ -35,7 +35,7 @@ If SponsorBlock API returns a `5xx` response, it automatically falls back and cr
 
 ## Installation and Setup
 
-Requires Node.js v20 and the Yarn package manager
+Requires Node.js v20 or higher and the PNPM package manager
 
 Clone the repo and the SBbrowser API submodule
 
@@ -47,16 +47,16 @@ Then install the submodule's dependencies then run the dev server
 
 ```console
 cd sbbrowser-api
-yarn
-yarn dev
+pnpm install
+pnpm run dev
 ```
 
 Install root dependencies
 
 ```console
 cd ..
-yarn
-yarn dev
+pnpm install
+pnpm run dev
 ```
 
 Copy the .env.local.example file
